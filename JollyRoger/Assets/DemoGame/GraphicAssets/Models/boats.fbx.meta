@@ -1,0 +1,380 @@
+fileFormatVersion: 2
+guid: b027caaddb10d58418b8d63234516082
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: armLeft 1
+    100002: armLeft 1.001
+    100004: armLeft 1.002
+    100006: armLeft 1.003
+    100008: armLeft 1.004
+    100010: armLeft 1.005
+    100012: armRight 1
+    100014: armRight 1.001
+    100016: armRight 1.002
+    100018: armRight 1.003
+    100020: armRight 1.004
+    100022: armRight 1.005
+    100024: barrel
+    100026: barrel.001
+    100028: barrel.002
+    100030: boat
+    100032: boat.001
+    100034: boat.002
+    100036: //RootNode
+    100038: body 1
+    100040: body 1.001
+    100042: body 1.002
+    100044: body 1.003
+    100046: body 1.004
+    100048: body 1.005
+    100050: cannon
+    100052: cannon.001
+    100054: cannon.002
+    100056: Group 143
+    100058: Group 143.001
+    100060: Group 143.002
+    100062: Group 143.003
+    100064: Group 143.004
+    100066: Group 143.005
+    100068: Group 143.006
+    100070: Group 143.007
+    100072: legLeft 1
+    100074: legLeft 1.001
+    100076: legLeft 1.002
+    100078: legLeft 1.003
+    100080: legLeft 1.004
+    100082: legLeft 1.005
+    100084: legRight 1
+    100086: legRight 1.001
+    100088: legRight 1.002
+    100090: legRight 1.003
+    100092: legRight 1.004
+    100094: legRight 1.005
+    100096: paddle
+    100098: paddle.001
+    100100: paddle.002
+    100102: paddle.003
+    100104: paddle.004
+    100106: paddle.005
+    100108: pirate_crew_8angles
+    100110: pirate_crew_8angles.001
+    100112: pirate_crew_8angles.002
+    100114: pirate_crew_8angles.003
+    100116: pirate_crew_8angles.004
+    100118: pirate_crew_8angles.005
+    400000: armLeft 1
+    400002: armLeft 1.001
+    400004: armLeft 1.002
+    400006: armLeft 1.003
+    400008: armLeft 1.004
+    400010: armLeft 1.005
+    400012: armRight 1
+    400014: armRight 1.001
+    400016: armRight 1.002
+    400018: armRight 1.003
+    400020: armRight 1.004
+    400022: armRight 1.005
+    400024: barrel
+    400026: barrel.001
+    400028: barrel.002
+    400030: boat
+    400032: boat.001
+    400034: boat.002
+    400036: //RootNode
+    400038: body 1
+    400040: body 1.001
+    400042: body 1.002
+    400044: body 1.003
+    400046: body 1.004
+    400048: body 1.005
+    400050: cannon
+    400052: cannon.001
+    400054: cannon.002
+    400056: Group 143
+    400058: Group 143.001
+    400060: Group 143.002
+    400062: Group 143.003
+    400064: Group 143.004
+    400066: Group 143.005
+    400068: Group 143.006
+    400070: Group 143.007
+    400072: legLeft 1
+    400074: legLeft 1.001
+    400076: legLeft 1.002
+    400078: legLeft 1.003
+    400080: legLeft 1.004
+    400082: legLeft 1.005
+    400084: legRight 1
+    400086: legRight 1.001
+    400088: legRight 1.002
+    400090: legRight 1.003
+    400092: legRight 1.004
+    400094: legRight 1.005
+    400096: paddle
+    400098: paddle.001
+    400100: paddle.002
+    400102: paddle.003
+    400104: paddle.004
+    400106: paddle.005
+    400108: pirate_crew_8angles
+    400110: pirate_crew_8angles.001
+    400112: pirate_crew_8angles.002
+    400114: pirate_crew_8angles.003
+    400116: pirate_crew_8angles.004
+    400118: pirate_crew_8angles.005
+    2100000: wood.001
+    2100002: wood.004
+    2100004: wood.003
+    2100006: textile
+    2100008: sand
+    2100010: _defaultMat
+    2100012: iron.001
+    2100014: iron
+    2100016: wood.002
+    2100018: textileRed
+    2300000: armLeft 1
+    2300002: armLeft 1.001
+    2300004: armLeft 1.002
+    2300006: armLeft 1.003
+    2300008: armLeft 1.004
+    2300010: armLeft 1.005
+    2300012: armRight 1
+    2300014: armRight 1.001
+    2300016: armRight 1.002
+    2300018: armRight 1.003
+    2300020: armRight 1.004
+    2300022: armRight 1.005
+    2300024: barrel
+    2300026: barrel.001
+    2300028: barrel.002
+    2300030: boat
+    2300032: boat.001
+    2300034: boat.002
+    2300036: body 1
+    2300038: body 1.001
+    2300040: body 1.002
+    2300042: body 1.003
+    2300044: body 1.004
+    2300046: body 1.005
+    2300048: cannon
+    2300050: cannon.001
+    2300052: cannon.002
+    2300054: Group 143
+    2300056: Group 143.001
+    2300058: Group 143.002
+    2300060: Group 143.003
+    2300062: Group 143.004
+    2300064: Group 143.005
+    2300066: Group 143.006
+    2300068: Group 143.007
+    2300070: legLeft 1
+    2300072: legLeft 1.001
+    2300074: legLeft 1.002
+    2300076: legLeft 1.003
+    2300078: legLeft 1.004
+    2300080: legLeft 1.005
+    2300082: legRight 1
+    2300084: legRight 1.001
+    2300086: legRight 1.002
+    2300088: legRight 1.003
+    2300090: legRight 1.004
+    2300092: legRight 1.005
+    2300094: paddle
+    2300096: paddle.001
+    2300098: paddle.002
+    2300100: paddle.003
+    2300102: paddle.004
+    2300104: paddle.005
+    3300000: armLeft 1
+    3300002: armLeft 1.001
+    3300004: armLeft 1.002
+    3300006: armLeft 1.003
+    3300008: armLeft 1.004
+    3300010: armLeft 1.005
+    3300012: armRight 1
+    3300014: armRight 1.001
+    3300016: armRight 1.002
+    3300018: armRight 1.003
+    3300020: armRight 1.004
+    3300022: armRight 1.005
+    3300024: barrel
+    3300026: barrel.001
+    3300028: barrel.002
+    3300030: boat
+    3300032: boat.001
+    3300034: boat.002
+    3300036: body 1
+    3300038: body 1.001
+    3300040: body 1.002
+    3300042: body 1.003
+    3300044: body 1.004
+    3300046: body 1.005
+    3300048: cannon
+    3300050: cannon.001
+    3300052: cannon.002
+    3300054: Group 143
+    3300056: Group 143.001
+    3300058: Group 143.002
+    3300060: Group 143.003
+    3300062: Group 143.004
+    3300064: Group 143.005
+    3300066: Group 143.006
+    3300068: Group 143.007
+    3300070: legLeft 1
+    3300072: legLeft 1.001
+    3300074: legLeft 1.002
+    3300076: legLeft 1.003
+    3300078: legLeft 1.004
+    3300080: legLeft 1.005
+    3300082: legRight 1
+    3300084: legRight 1.001
+    3300086: legRight 1.002
+    3300088: legRight 1.003
+    3300090: legRight 1.004
+    3300092: legRight 1.005
+    3300094: paddle
+    3300096: paddle.001
+    3300098: paddle.002
+    3300100: paddle.003
+    3300102: paddle.004
+    3300104: paddle.005
+    4300000: boat.002
+    4300002: paddle.005
+    4300004: paddle.004
+    4300006: armLeft 1.005
+    4300008: armRight 1.005
+    4300010: body 1.005
+    4300012: Group 143.007
+    4300014: legLeft 1.005
+    4300016: legRight 1.005
+    4300018: legRight 1.004
+    4300020: legLeft 1.004
+    4300022: Group 143.006
+    4300024: body 1.004
+    4300026: armRight 1.004
+    4300028: armLeft 1.004
+    4300030: cannon.002
+    4300032: barrel.002
+    4300034: boat.001
+    4300036: cannon.001
+    4300038: barrel.001
+    4300040: armLeft 1.003
+    4300042: armRight 1.003
+    4300044: body 1.003
+    4300046: Group 143.005
+    4300048: legLeft 1.003
+    4300050: legRight 1.003
+    4300052: legRight 1.002
+    4300054: legLeft 1.002
+    4300056: Group 143.004
+    4300058: body 1.002
+    4300060: armRight 1.002
+    4300062: armLeft 1.002
+    4300064: paddle.003
+    4300066: paddle.002
+    4300068: boat
+    4300070: paddle.001
+    4300072: paddle
+    4300074: armLeft 1.001
+    4300076: armRight 1.001
+    4300078: body 1.001
+    4300080: Group 143.002
+    4300082: Group 143.003
+    4300084: legLeft 1.001
+    4300086: legRight 1.001
+    4300088: legRight 1
+    4300090: legLeft 1
+    4300092: Group 143
+    4300094: Group 143.001
+    4300096: body 1
+    4300098: armRight 1
+    4300100: armLeft 1
+    4300102: cannon
+    4300104: barrel
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.015
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

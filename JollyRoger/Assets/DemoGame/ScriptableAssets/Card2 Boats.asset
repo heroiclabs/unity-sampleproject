@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff77e5de4a71b148b1121c55d5a93bd, type: 3}
+  m_Name: Card2 Boats
+  m_EditorClassIdentifier: 
+  _cardtype: 3
+  _name: Boats
+  _description: Fast but weak. Cosist of three units.
+  _sprite: {fileID: 21300000, guid: 46157db4b84b58242ba35cb8e409e6fb, type: 3}
+  _cost: 3
+  _health: 25
+  _healthPerLevel: 2
+  _damage: 3
+  _damagePerLevel: 1
+  _attackeType: 0
+  _reloadTime: 0.5
+  _reloadTimePerLevel: 0
+  _moveSpeed: 1.5
+  _moveSpeedPerLevel: -0.05
+  _rotationSpeed: 0.75
+  _rotationSpeedPerLevel: -0.05
+  _dropRegion: 3
+  _canBeDroppedOverOtherUnits: 0
+  _visualizerPrefab: {fileID: 4329019890713221581, guid: b92f05ff53b59664eb671f5dadb65a5b,
+    type: 3}

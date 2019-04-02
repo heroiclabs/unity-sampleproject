@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff77e5de4a71b148b1121c55d5a93bd, type: 3}
+  m_Name: Card3 Fireball
+  m_EditorClassIdentifier: 
+  _cardtype: 4
+  _name: Fireball
+  _description: Strong AoE damage.
+  _sprite: {fileID: 21300000, guid: c617d3dce2494da4d8d38d03240b976a, type: 3}
+  _cost: 3
+  _health: 0
+  _healthPerLevel: 0
+  _damage: 30
+  _damagePerLevel: 5
+  _attackeType: 1
+  _reloadTime: 0
+  _reloadTimePerLevel: 0
+  _moveSpeed: 0
+  _moveSpeedPerLevel: 0
+  _rotationSpeed: 0
+  _rotationSpeedPerLevel: 0
+  _dropRegion: 0
+  _canBeDroppedOverOtherUnits: 1
+  _visualizerPrefab: {fileID: 5972670219220740020, guid: 8874ea083a1fc034d8e97fee1fee7680,
+    type: 3}

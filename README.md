@@ -51,7 +51,7 @@ The Jolly Roger game is a Unity project that can be opened in Unity version 2018
 
 ## Contribute
 
-The collaboration on this code is managed as GitHub issues and pull requests are welcome. If you're interested to enhance the code please open an issue to discuss the changes or drop in and discuss it in the [community chat](https://gitter.im/heroiclabs/nakama).
+The collaboration on this code is managed as GitHub issues and pull requests are welcome. If you're interested to enhance the code please open an issue to discuss the changes or drop in and discuss it in the [community forum](https://forum.heroiclabs.com).
 
 ### License
 

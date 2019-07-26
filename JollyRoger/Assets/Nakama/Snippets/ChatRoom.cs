@@ -24,7 +24,7 @@ public class ChatRoom : MonoBehaviour
 {
     private const string RoomName = "heroes";
 
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client( "http", "127.0.0.1", 7350, "defaultkey" );
     private ISocket _socket;
 
     async void Start()
@@ -34,27 +34,27 @@ public class ChatRoom : MonoBehaviour
         var session = await _client.AuthenticateDeviceAsync(deviceid);
         Debug.LogFormat("Session '{0}'", session);
 
-        _socket = _client.CreateWebSocket();
+        _socket = _client.NewSocket();
 
         var connectedUsers = new List<IUserPresence>(0);
-        _socket.OnChannelPresence += (sender, presenceChange) =>
+        _socket.ReceivedChannelPresence += ( obj ) =>
         {
-            connectedUsers.AddRange(presenceChange.Joins);
-            foreach (var leave in presenceChange.Leaves)
+            connectedUsers.AddRange( obj.Joins );
+            foreach( var leave in obj.Leaves )
             {
-                connectedUsers.RemoveAll(item => item.SessionId.Equals(leave.SessionId));
+                connectedUsers.RemoveAll( item => item.SessionId.Equals( leave.SessionId ) );
             };
 
             // Print connected presences.
-            var presences = string.Join(", ", connectedUsers);
-            Debug.LogFormat("Presence List\n {0}", presences);
-        };
-        _socket.OnChannelMessage += (sender, message) =>
+            var presences = string.Join( ", ", connectedUsers );
+            Debug.LogFormat( "Presence List\n {0}", presences );
+        }; 
+        _socket.ReceivedChannelMessage += (obj) =>
         {
-            Debug.LogFormat("Received Message '{0}'", message);
+            Debug.LogFormat("Received Message '{0}'", obj.Content);
         };
-        _socket.OnConnect += (sender, evt) => Debug.Log("Socket connected.");
-        _socket.OnDisconnect += (sender, evt) => Debug.Log("Socket disconnected.");
+        _socket.Connected += () => Debug.Log("Socket connected.");
+        _socket.Closed += () => Debug.Log("Socket disconnected.");
 
         await _socket.ConnectAsync(session);
 
@@ -67,11 +67,12 @@ public class ChatRoom : MonoBehaviour
         await _socket.WriteChatMessageAsync(channel, content);
     }
 
+
     private async void OnApplicationQuit()
     {
         if (_socket != null)
         {
-            await _socket.DisconnectAsync(false);
+            await _socket.CloseAsync();
         }
     }
 }

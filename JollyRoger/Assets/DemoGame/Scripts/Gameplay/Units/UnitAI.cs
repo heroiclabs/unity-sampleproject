@@ -203,10 +203,10 @@ namespace DemoGame.Scripts.Gameplay.Units
         /// Use only on host!
         /// </summary>
         /// <param name="node"></param>
-        protected virtual void SendMoveRequest(Node node)
+        protected async virtual void SendMoveRequest(Node node)
         {
             MatchMessageUnitMoved message = new MatchMessageUnitMoved(node.Position.x, node.Position.y, _unit.Id, _unit.OwnerId);
-            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitMoved, message);
+            await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitMoved, message);
             MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitMoved, message);
         }
 
@@ -214,10 +214,10 @@ namespace DemoGame.Scripts.Gameplay.Units
         /// Sends attack request to other players and self.
         /// Use only on host!
         /// </summary>
-        protected virtual void SendAttackRequest(Unit enemy, int damage, AttackType attackType)
+        protected async virtual void SendAttackRequest(Unit enemy, int damage, AttackType attackType)
         {
             MatchMessageUnitAttacked message = new MatchMessageUnitAttacked(_unit.Id, _unit.OwnerId, enemy.Id, _unit.Damage, _unit.AttackType);
-            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitAttacked, message);
+            await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitAttacked, message);
             MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitAttacked, message);
         }
 

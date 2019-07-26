@@ -119,13 +119,13 @@ namespace DemoGame.Scripts.Matchmaking
             // Create params object with default values
             MatchmakingParams param = new MatchmakingParams();
 
-            socket.OnMatchmakerMatched += OnMatchmakerMatched;
+            socket.ReceivedMatchmakerMatched += OnMatchmakerMatched;
             // Join the matchmaker
             ticket = await MatchmakingManager.EnterQueueAsync(socket, param);
             if (ticket == null)
             {
                 Debug.Log("Couldn't start matchmaker" + Environment.NewLine + "Try again later");
-                socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+                socket.ReceivedMatchmakerMatched -= OnMatchmakerMatched;
                 return false;
             }
             else
@@ -138,12 +138,12 @@ namespace DemoGame.Scripts.Matchmaking
         /// <summary>
         /// Invoked whenever matchmaker finds an opponent.
         /// </summary>
-        private void OnMatchmakerMatched(object sender, IMatchmakerMatched e)
+        private void OnMatchmakerMatched( IMatchmakerMatched e)
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() =>
             {
                 ISocket socket = NakamaSessionManager.Instance.Socket;
-                socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+                socket.ReceivedMatchmakerMatched -= OnMatchmakerMatched;
 
                 StartCoroutine(LoadBattle(e));
             });
@@ -163,7 +163,7 @@ namespace DemoGame.Scripts.Matchmaking
             bool good = await MatchmakingManager.LeaveQueueAsync(socket, ticket);
 
             this.ticket = null;
-            socket.OnMatchmakerMatched -= OnMatchmakerMatched;
+            socket.ReceivedMatchmakerMatched -= OnMatchmakerMatched;
             return good;
         }
 

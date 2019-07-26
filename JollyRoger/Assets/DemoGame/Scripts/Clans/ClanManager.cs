@@ -47,7 +47,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.InternalServerError)
                 {
                     Debug.LogWarning("Clan name \"" + name + "\" already in use");
                     return null;
@@ -78,7 +78,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
                 {
                     Debug.LogWarning("Unauthorized clan removal with code " + e.StatusCode + ": " + e);
                     return false;
@@ -195,7 +195,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.NotFound)
                 {
                     Debug.LogWarning("Insufficient permissions to kick " + kickedUser.Username
                         + " from clan " + clan.Name + " or clan not found: " + e);
@@ -229,7 +229,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
                 {
                     Debug.LogWarning("Insufficient permissions to promote user or clan not found");
                     return false;

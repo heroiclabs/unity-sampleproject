@@ -64,13 +64,13 @@ namespace DemoGame.Scripts.Notifications
         /// </summary>
         private void Init()
         {
-            NakamaSessionManager.Instance.Socket.OnNotification += NotificationReceived;
+            NakamaSessionManager.Instance.Socket.ReceivedNotification += NotificationReceived;
         }
 
         /// <summary>
         /// Handles incomming notification messages.
         /// </summary>
-        private void NotificationReceived(object sender, IApiNotification notification)
+        private void NotificationReceived( IApiNotification notification)
         {
             Debug.Log("Notification received: " + notification.Code);
             PushLocalNotification(notification);

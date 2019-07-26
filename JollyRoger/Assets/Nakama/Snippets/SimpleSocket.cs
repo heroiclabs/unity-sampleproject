@@ -21,7 +21,7 @@ using UnityEngine;
 
 public class SimpleSocket : MonoBehaviour
 {
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client( "http", "127.0.0.1", 7350, "defaultkey" );
     private ISocket _socket;
 
     async void Awake()
@@ -30,9 +30,9 @@ public class SimpleSocket : MonoBehaviour
         var deviceid = SystemInfo.deviceUniqueIdentifier;
         var session = await _client.AuthenticateDeviceAsync(deviceid);
 
-        _socket = _client.CreateWebSocket();
-        _socket.OnConnect += (sender, args) => Debug.Log("Socket connected.");
-        _socket.OnDisconnect += (sender, args) => Debug.Log("Socket disconnected.");
+        _socket = _client.NewSocket();
+        _socket.Connected += () => Debug.Log("Socket connected.");
+        _socket.Closed += () => Debug.Log("Socket disconnected.");
 
         await _socket.ConnectAsync(session);
     }
@@ -41,7 +41,7 @@ public class SimpleSocket : MonoBehaviour
     {
         if (_socket != null)
         {
-            await _socket.DisconnectAsync(false);
+            await _socket.CloseAsync();
         }
     }
 }

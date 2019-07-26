@@ -115,12 +115,12 @@ namespace DemoGame.Scripts.Gameplay.Spells
         /// <param name="node"></param>
         /// <param name="impactedUnits"></param>
         /// <param name="playerId"></param>
-        private void SendSpellActivatedRequest(Node node, List<Unit> impactedUnits, string playerId)
+        private async void SendSpellActivatedRequest(Node node, List<Unit> impactedUnits, string playerId)
         {
             List<int> impactedUnitsIds = impactedUnits.Select(u => u.Id).ToList();
             MatchMessageSpellActivated message = new MatchMessageSpellActivated(playerId, SpellType, node.Position.x, node.Position.y, impactedUnitsIds);
 
-            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.SpellActivated, message);
+            await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.SpellActivated, message);
             MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.SpellActivated, message);
         }
 

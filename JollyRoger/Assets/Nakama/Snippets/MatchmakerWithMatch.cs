@@ -23,7 +23,7 @@ using UnityEngine;
 
 public class MatchmakerWithMatch : MonoBehaviour
 {
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client( "http", "127.0.0.1", 7350, "defaultkey" );
     private ISocket _socket;
 
     async void Start()
@@ -33,11 +33,11 @@ public class MatchmakerWithMatch : MonoBehaviour
         var session = await _client.AuthenticateDeviceAsync(deviceid);
         Debug.LogFormat("Session '{0}'", session);
 
-        _socket = _client.CreateWebSocket();
+        _socket = _client.NewSocket();
 
         IUserPresence self = null;
         var connectedOpponents = new List<IUserPresence>(0);
-        _socket.OnMatchmakerMatched += async (sender, matched) =>
+        _socket.ReceivedMatchmakerMatched += async ( matched) =>
         {
             Debug.LogFormat("Matched '{0}'", matched);
             var match = await _socket.JoinMatchAsync(matched);
@@ -47,9 +47,9 @@ public class MatchmakerWithMatch : MonoBehaviour
 
             // NOTE shows how to send match state messages.
             var newState = new Dictionary<string, string> {{"hello", "world"}}.ToJson();
-            _socket.SendMatchState(match.Id, 0, newState); // Send to all connected users.
+            await _socket.SendMatchStateAsync(match.Id, 0, newState); // Send to all connected users.
         };
-        _socket.OnMatchPresence += (sender, presenceChange) =>
+        _socket.ReceivedMatchPresence += ( presenceChange) =>
         {
             connectedOpponents.AddRange(presenceChange.Joins);
             foreach (var leave in presenceChange.Leaves)
@@ -61,13 +61,13 @@ public class MatchmakerWithMatch : MonoBehaviour
                 return self != null && item.SessionId.Equals(self.SessionId);
             });
         };
-        _socket.OnMatchState += (sender, message) =>
+        _socket.ReceivedMatchState += ( message) =>
         {
             var enc = System.Text.Encoding.UTF8;
             Debug.LogFormat("Match state '{0}'", enc.GetString(message.State));
         };
-        _socket.OnConnect += (sender, evt) => Debug.Log("Socket connected.");
-        _socket.OnDisconnect += (sender, evt) => Debug.Log("Socket disconnected.");
+        _socket.Connected += ( ) => Debug.Log("Socket connected.");
+        _socket.Closed += () => Debug.Log("Socket disconnected.");
 
         await _socket.ConnectAsync(session);
 
@@ -81,7 +81,7 @@ public class MatchmakerWithMatch : MonoBehaviour
     {
         if (_socket != null)
         {
-            await _socket.DisconnectAsync(false);
+            await _socket.CloseAsync();
         }
     }
 }

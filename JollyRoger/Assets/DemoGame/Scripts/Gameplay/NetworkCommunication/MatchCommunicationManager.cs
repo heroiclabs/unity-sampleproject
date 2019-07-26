@@ -171,8 +171,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
             try
             {
                 // Listen to incomming match messages and user connection changes
-                _socket.OnMatchPresence += OnMatchPresence;
-                _socket.OnMatchState += ReceiveMatchStateMessage;
+                _socket.ReceivedMatchPresence += OnMatchPresence;
+                _socket.ReceivedMatchState += ReceiveMatchStateMessage;
 
                 // Join the match
                 IMatch match = await _socket.JoinMatchAsync(matched);
@@ -207,14 +207,15 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         /// </summary>
         public void LeaveGame()
         {
+            Debug.LogWarning( "Leaving game..." );
             if (_isLeaving == true)
             {
                 Debug.Log("Already leaving");
                 return;
             }
             _isLeaving = true;
-            _socket.OnMatchPresence -= OnMatchPresence;
-            _socket.OnMatchState -= ReceiveMatchStateMessage;
+            _socket.ReceivedMatchPresence -= OnMatchPresence;
+            _socket.ReceivedMatchState -= ReceiveMatchStateMessage;
 
             //Starts coroutine which is loading main menu and also disconnects player from match
             StartCoroutine(LoadMenuCoroutine());
@@ -226,7 +227,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         /// <typeparam name="T"></typeparam>
         /// <param name="opCode"></param>
         /// <param name="message"></param>
-        public void SendMatchStateMessage<T>(MatchMessageType opCode, T message)
+        public async Task SendMatchStateMessage<T>(MatchMessageType opCode, T message)
             where T : MatchMessage<T>
         {
             try
@@ -236,7 +237,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
 
                 //Sending match state json along with opCode needed for unpacking message to server.
                 //Then server sends it to other players
-                _socket.SendMatchState(MatchId, (long)opCode, json);
+                await _socket.SendMatchStateAsync(MatchId, (long)opCode, json);
             }
             catch (Exception e)
             {
@@ -419,7 +420,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnMatchPresence(object sender, IMatchPresenceEvent e)
+        private void OnMatchPresence( IMatchPresenceEvent e)
         {
             foreach (IUserPresence user in e.Joins)
             {
@@ -513,7 +514,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
 
         private void GameEnded(MatchMessageGameEnded obj)
         {
-            _socket.OnMatchPresence -= OnMatchPresence;
+            _socket.ReceivedMatchPresence -= OnMatchPresence;
         }
 
         /// <summary>

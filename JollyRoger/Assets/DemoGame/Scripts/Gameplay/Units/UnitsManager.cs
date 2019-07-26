@@ -129,7 +129,7 @@ namespace DemoGame.Scripts.Gameplay.Units
         /// Builds forts at the start of the game
         /// </summary>
         /// <param name="userId"></param>
-        public void BuildStartingStructures(string userId)
+        public async void BuildStartingStructures(string userId)
         {
             if (MatchCommunicationManager.Instance.IsHost == false)
             {
@@ -157,9 +157,9 @@ namespace DemoGame.Scripts.Gameplay.Units
                 MatchMessageUnitSpawned fortMain = new MatchMessageUnitSpawned(
                     userId, PlayerColor.Black, _nextId++, mainFortCard, 2, 6);
 
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortTop);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortBot);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortMain);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortTop);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortBot);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortMain);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortTop);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortBot);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortMain);
@@ -178,9 +178,9 @@ namespace DemoGame.Scripts.Gameplay.Units
                 MatchMessageUnitSpawned fortMain = new MatchMessageUnitSpawned(
                     userId, PlayerColor.Red, _nextId++, mainFortCard, 12, 6);
 
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortTop);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortBot);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortMain);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortTop);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortBot);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, fortMain);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortTop);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortBot);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, fortMain);
@@ -200,7 +200,7 @@ namespace DemoGame.Scripts.Gameplay.Units
         /// Resolves card playing, then spawns unit of given type 
         /// </summary>
         /// <param name="message"></param>
-        private void CardPlayed(MatchMessageCardPlayed message)
+        private async void CardPlayed(MatchMessageCardPlayed message)
         {
             if (MatchCommunicationManager.Instance.IsHost == true)
             {
@@ -221,7 +221,7 @@ namespace DemoGame.Scripts.Gameplay.Units
                 if (unitSpawned != null)
                 {
                     _nextId += 1;
-                    MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, unitSpawned);
+                    await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.UnitSpawned, unitSpawned);
                     MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.UnitSpawned, unitSpawned);
                 }
             }

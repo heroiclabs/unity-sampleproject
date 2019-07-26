@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Copyright 2019 The Knights Of Unity, created by Pawel Stolarczyk
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -114,7 +114,7 @@ namespace DemoGame.Scripts.Session
                 {
                     // "defaultkey" should be changed when releasing the app
                     // see https://heroiclabs.com/docs/install-configuration/#socket
-                    _client = new Client("defaultkey", _ipAddress, _port, false);
+                    _client = new Client( "http", _ipAddress, _port, "defaultkey" ); 
                 }
                 return _client;
             }
@@ -130,7 +130,7 @@ namespace DemoGame.Scripts.Session
                 if (_socket == null)
                 {
                     // Initializing socket
-                    _socket = Client.CreateWebSocket();
+                    _socket = Client.NewSocket();
                 }
                 return _socket;
             }
@@ -337,13 +337,17 @@ namespace DemoGame.Scripts.Session
         {
             try
             {
+#if !UNITY_EDITOR
                 Session = await Client.AuthenticateDeviceAsync(_deviceId, null, false);
+#else
+                Session = await Client.AuthenticateEmailAsync( "aaaa@aaaa.aaa", "aaaaaaaa",null, false );
+#endif
                 Debug.Log("Device authenticated with token:" + Session.AuthToken);
                 return AuthenticationResponse.Authenticated;
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.NotFound)
                 {
                     Debug.Log("Couldn't find DeviceId in database, creating new user; message: " + e);
                     return await CreateAccountAsync();
@@ -369,7 +373,11 @@ namespace DemoGame.Scripts.Session
         {
             try
             {
-                Session = await Client.AuthenticateDeviceAsync(_deviceId, null, true);
+#if !UNITY_EDITOR
+                Session = await Client.AuthenticateDeviceAsync( _deviceId, null, true );
+#else
+                Session = await Client.AuthenticateEmailAsync( "aaaa@aaaa.aaa", "aaaaaaaa",null, true );
+#endif
                 return AuthenticationResponse.NewAccountCreated;
             }
             catch (Exception e)
@@ -389,7 +397,7 @@ namespace DemoGame.Scripts.Session
             {
                 if (_socket != null)
                 {
-                    await _socket.DisconnectAsync();
+                    await _socket.CloseAsync();
                 }
             }
             catch (Exception e)
@@ -434,9 +442,9 @@ namespace DemoGame.Scripts.Session
             }
         }
 
-        #endregion
+#endregion
 
-        #region UserInfo
+#region UserInfo
 
         /// <summary>
         /// Receives currently logged in user's <see cref="IApiAccount"/> from server.
@@ -541,9 +549,9 @@ namespace DemoGame.Scripts.Session
             }
         }
 
-        #endregion
+#endregion
 
-        #region Facebook
+#region Facebook
 
         /// <summary>
         /// Initializes Facebook connection.
@@ -625,7 +633,7 @@ namespace DemoGame.Scripts.Session
                 }
                 catch (ApiResponseException e)
                 {
-                    if (e.StatusCode == System.Net.HttpStatusCode.Conflict)
+                    if (e.StatusCode == (long)System.Net.HttpStatusCode.Conflict)
                     {
                         return FacebookResponse.Conflict;
                     }
@@ -706,7 +714,7 @@ namespace DemoGame.Scripts.Session
             }
         }
 
-        #endregion
+#endregion
 
     }
 

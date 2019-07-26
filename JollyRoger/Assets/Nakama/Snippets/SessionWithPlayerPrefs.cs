@@ -23,7 +23,7 @@ public class SessionWithPlayerPrefs : MonoBehaviour
 {
     private const string PrefKeyName = "nakama.session";
 
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client( "http", "127.0.0.1", 7350, "defaultkey" );
     private ISession _session;
 
     async void Awake()

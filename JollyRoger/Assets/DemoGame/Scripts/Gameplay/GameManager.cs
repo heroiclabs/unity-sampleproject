@@ -255,7 +255,7 @@ namespace DemoGame.Scripts.Gameplay
             {
                 List<Card> cards = await _opponentHand.InitAsync(presence.UserId);
                 MatchMessageStartingHand message = new MatchMessageStartingHand(presence.UserId, cards);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.StartingHand, message);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.StartingHand, message);
                 _opponentGold.Restart();
             }
         }
@@ -285,7 +285,7 @@ namespace DemoGame.Scripts.Gameplay
         /// User requested card play.
         /// Host will handle the request or cancel it if it was illegal.
         /// </summary>
-        private void OnCardRequested(MatchMessageCardPlayRequest message)
+        private async void OnCardRequested(MatchMessageCardPlayRequest message)
         {
             if (message.PlayerId == NakamaSessionManager.Instance.Session.UserId)
             {
@@ -295,7 +295,7 @@ namespace DemoGame.Scripts.Gameplay
                 }
                 else
                 {
-                    MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayRequest, message);
+                   await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayRequest, message);
                 }
             }
             else
@@ -343,7 +343,7 @@ namespace DemoGame.Scripts.Gameplay
         /// <summary>
         /// Requests card play.
         /// </summary>
-        private void SendCardPlayedMessage(MatchMessageCardPlayRequest message, Hand userHand, Vector2Int nodePosition)
+        private async void SendCardPlayedMessage(MatchMessageCardPlayRequest message, Hand userHand, Vector2Int nodePosition)
         {
             Card newCard = userHand.DrawCard();
 
@@ -355,7 +355,7 @@ namespace DemoGame.Scripts.Gameplay
                 nodePosition.x,
                 nodePosition.y);
 
-            MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, matchMessageCardPlayed);
+            await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardPlayed, matchMessageCardPlayed);
             MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.CardPlayed, matchMessageCardPlayed);
             userHand.CardPlayed(message.CardSlotIndex);
         }
@@ -363,7 +363,7 @@ namespace DemoGame.Scripts.Gameplay
         /// <summary>
         /// Cancels played card and returns it to its owner's hand.
         /// </summary>
-        private void SendCardCanceledMessage(MatchMessageCardPlayRequest message)
+        private async void SendCardCanceledMessage(MatchMessageCardPlayRequest message)
         {
             MatchMessageCardCanceled cardCanceled = new MatchMessageCardCanceled(message.PlayerId, message.CardSlotIndex);
             if (message.PlayerId == NakamaSessionManager.Instance.Session.UserId)
@@ -372,7 +372,7 @@ namespace DemoGame.Scripts.Gameplay
             }
             else
             {
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardCanceled, cardCanceled);
+               await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.CardCanceled, cardCanceled);
             }
         }
 
@@ -538,7 +538,7 @@ namespace DemoGame.Scripts.Gameplay
         /// Invoked upon destruction of player's main castle.
         /// Sends game ending message.
         /// </summary>
-        private void OnCastleDestroyed(Unit destroyedCastle)
+        private async void OnCastleDestroyed(Unit destroyedCastle)
         {
             if (destroyedCastle == _allyCastle)
             {
@@ -551,7 +551,7 @@ namespace DemoGame.Scripts.Gameplay
                 int loserTowersDestroyed = 0 + _enemyTowers.Count(x => x.IsDestroyed == true);
 
                 MatchMessageGameEnded message = new MatchMessageGameEnded(winner, loser, matchId, winnerTowersDestroyed, loserTowersDestroyed, matchDuration);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.MatchEnded, message);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.MatchEnded, message);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.MatchEnded, message);
             }
             else
@@ -565,7 +565,7 @@ namespace DemoGame.Scripts.Gameplay
                 int loserTowersDestroyed = 0 + _allyTowers.Count(x => x.IsDestroyed == true);
 
                 MatchMessageGameEnded message = new MatchMessageGameEnded(winner, loser, matchId, winnerTowersDestroyed, loserTowersDestroyed, matchDuration);
-                MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.MatchEnded, message);
+                await MatchCommunicationManager.Instance.SendMatchStateMessage(MatchMessageType.MatchEnded, message);
                 MatchCommunicationManager.Instance.SendMatchStateMessageSelf(MatchMessageType.MatchEnded, message);
             }
         }

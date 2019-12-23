@@ -188,7 +188,7 @@ namespace DemoGame.Scripts.Leaderboards
         /// </summary>
         public async void ShowFriendsLeaderboards(string cursor)
         {
-            IApiFriends friends = await FriendsManager.LoadFriendsAsync(Client, Session);
+            var friends = await FriendsManager.LoadFriendsAsync(Client, Session);
             if (friends == null)
             {
                 return;

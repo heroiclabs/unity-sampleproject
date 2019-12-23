@@ -24,7 +24,7 @@ public class ChatRoom : MonoBehaviour
 {
     private const string RoomName = "heroes";
 
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client("http", "127.0.0.1", 7350, "defaultkey");
     private ISocket _socket;
 
     async void Start()
@@ -34,10 +34,10 @@ public class ChatRoom : MonoBehaviour
         var session = await _client.AuthenticateDeviceAsync(deviceid);
         Debug.LogFormat("Session '{0}'", session);
 
-        _socket = _client.CreateWebSocket();
+        _socket = _client.NewSocket();
 
         var connectedUsers = new List<IUserPresence>(0);
-        _socket.OnChannelPresence += (sender, presenceChange) =>
+        _socket.ReceivedChannelPresence += (presenceChange) =>
         {
             connectedUsers.AddRange(presenceChange.Joins);
             foreach (var leave in presenceChange.Leaves)
@@ -49,12 +49,12 @@ public class ChatRoom : MonoBehaviour
             var presences = string.Join(", ", connectedUsers);
             Debug.LogFormat("Presence List\n {0}", presences);
         };
-        _socket.OnChannelMessage += (sender, message) =>
+        _socket.ReceivedChannelMessage += (message) =>
         {
             Debug.LogFormat("Received Message '{0}'", message);
         };
-        _socket.OnConnect += (sender, evt) => Debug.Log("Socket connected.");
-        _socket.OnDisconnect += (sender, evt) => Debug.Log("Socket disconnected.");
+        _socket.Connected += () => Debug.Log("Socket connected.");
+        _socket.Closed += () => Debug.Log("Socket disconnected.");
 
         await _socket.ConnectAsync(session);
 
@@ -71,7 +71,7 @@ public class ChatRoom : MonoBehaviour
     {
         if (_socket != null)
         {
-            await _socket.DisconnectAsync(false);
+            await _socket.CloseAsync();
         }
     }
 }

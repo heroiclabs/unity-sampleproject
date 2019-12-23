@@ -120,7 +120,7 @@ namespace DemoGame.Scripts.Friends
             ISession session = NakamaSessionManager.Instance.Session;
 
             //loading friends data
-            IApiFriends friends = await FriendsManager.LoadFriendsAsync(client, session);
+            var friends = await FriendsManager.LoadFriendsAsync(client, session);
             if (friends != null)
             {
                 //refreshing ui view with downloaded data
@@ -137,7 +137,7 @@ namespace DemoGame.Scripts.Friends
         /// <summary>
         /// Populating friend list with elements created basing on loaded friends list from database
         /// </summary>
-        private void RefreshFriendsListUI(IApiFriends friends)
+        private void RefreshFriendsListUI(IApiFriendList friends)
         {
             ClearLists();
             foreach (IApiFriend friend in friends.Friends)
@@ -184,7 +184,7 @@ namespace DemoGame.Scripts.Friends
         private async void ActualizeFriendsList()
         {
             //loading data from server
-            IApiFriends friends = await FriendsManager.LoadFriendsAsync(NakamaSessionManager.Instance.Client, NakamaSessionManager.Instance.Session);
+            var friends = await FriendsManager.LoadFriendsAsync(NakamaSessionManager.Instance.Client, NakamaSessionManager.Instance.Session);
             if (friends != null)
             {
                 //refreshing viev

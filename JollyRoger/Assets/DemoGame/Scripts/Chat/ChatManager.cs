@@ -61,8 +61,8 @@ namespace DemoGame.Scripts.Chat
         {
             //Register methods to Socket events
             NakamaSessionManager.Instance.OnConnectionSuccess -= Init;
-            NakamaSessionManager.Instance.Socket.OnChannelMessage += ReceiveMessage;
-            NakamaSessionManager.Instance.Socket.OnChannelPresence += ReceiveChannelPresence;
+            NakamaSessionManager.Instance.Socket.ReceivedChannelMessage += ReceiveMessage;
+            NakamaSessionManager.Instance.Socket.ReceivedChannelPresence += ReceiveChannelPresence;
         }
 
         #endregion
@@ -247,7 +247,7 @@ namespace DemoGame.Scripts.Chat
         /// <summary>
         /// Dispatches <see cref="ReceiveMessage(IApiChannelMessage, bool)"/> to be runned in main thread
         /// </summary>
-        private void ReceiveMessage(object sender, IApiChannelMessage message)
+        private void ReceiveMessage(IApiChannelMessage message)
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() => ReceiveMessage(message));
         }
@@ -338,7 +338,7 @@ namespace DemoGame.Scripts.Chat
         /// <summary>
         /// Dispatches <see cref="ReceiveChannelPresence(string, IEnumerable{IUserPresence}, IEnumerable{IUserPresence})"/> to be runned in main thread
         /// </summary>
-        private void ReceiveChannelPresence(object sender, IChannelPresenceEvent presenceEvent)
+        private void ReceiveChannelPresence(IChannelPresenceEvent presenceEvent)
         {
             UnityMainThreadDispatcher.Instance().Enqueue(() => ReceiveChannelPresence(presenceEvent.ChannelId, presenceEvent.Joins, presenceEvent.Leaves));
         }

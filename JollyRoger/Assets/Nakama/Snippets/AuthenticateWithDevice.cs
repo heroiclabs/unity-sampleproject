@@ -22,7 +22,7 @@ using UnityEngine;
 
 public class AuthenticateWithDevice : MonoBehaviour
 {
-    private readonly IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private readonly IClient _client = new Client("http", "127.0.0.1", 7350, "defaultkey");
 
     async void Awake()
     {

@@ -21,7 +21,7 @@ using UnityEngine;
 
 public class SocketDebugger : MonoBehaviour
 {
-    private IClient _client = new Client("defaultkey", "127.0.0.1", 7350, false);
+    private IClient _client = new Client("http", "127.0.0.1", 7350, "defaultkey");
     private ISocket _socket;
 
     async void Awake()
@@ -29,7 +29,7 @@ public class SocketDebugger : MonoBehaviour
         var deviceid = SystemInfo.deviceUniqueIdentifier;
         var session = await _client.AuthenticateDeviceAsync(deviceid);
 
-        _socket = _client.CreateWebSocket();
+        _socket = _client.NewSocket();
 
         await _socket.ConnectAsync(session);
     }
@@ -50,7 +50,7 @@ public class SocketDebugger : MonoBehaviour
     {
         if (_socket != null)
         {
-            await _socket.DisconnectAsync(false);
+            await _socket.CloseAsync();
         }
     }
 }

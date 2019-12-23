@@ -32,11 +32,11 @@ namespace DemoGame.Scripts.Friends
         /// <summary>
         /// This method is loading friends list from database. Return value indicates whether operation succeed or failed.
         /// </summary>
-        public static async Task<IApiFriends> LoadFriendsAsync(IClient client, ISession session)
+        public static async Task<IApiFriendList> LoadFriendsAsync(IClient client, ISession session)
         {
             try
             {
-                IApiFriends friends = await client.ListFriendsAsync(session);
+                var friends = await client.ListFriendsAsync(session);
                 return friends;
             }
             catch (Exception e)  //catching exception, if program enters this code loading operation was not successfully completed

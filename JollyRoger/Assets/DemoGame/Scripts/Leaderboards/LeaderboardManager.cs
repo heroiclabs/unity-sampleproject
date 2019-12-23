@@ -39,7 +39,7 @@ namespace DemoGame.Scripts.Leaderboards
         {
             try
             {
-                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", null, limit, cursor);
+                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", null, null, limit, cursor);
                 return list;
             }
             catch (Exception e)
@@ -56,9 +56,9 @@ namespace DemoGame.Scripts.Leaderboards
         {
             try
             {
-                IApiGroupUserList users = await client.ListGroupUsersAsync(session, clan.Id);
+                var users = await client.ListGroupUsersAsync(session, clan.Id, null, 1, null);
                 IEnumerable<string> ids = users.GroupUsers.Select(x => x.User.Id);
-                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", ids, limit, cursor);
+                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", ids, null, limit, cursor);
                 return list;
             }
             catch (Exception e)
@@ -77,7 +77,7 @@ namespace DemoGame.Scripts.Leaderboards
             {
                 List<string> ids = friends.Select(x => x.User.Id).ToList();
                 ids.Add(NakamaSessionManager.Instance.Session.UserId);
-                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", ids, limit, cursor);
+                IApiLeaderboardRecordList list = await client.ListLeaderboardRecordsAsync(session, "global", ids, null, limit, cursor);
                 return list;
             }
             catch (Exception e)

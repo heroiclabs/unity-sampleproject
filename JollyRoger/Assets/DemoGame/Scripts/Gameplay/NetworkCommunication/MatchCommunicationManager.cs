@@ -171,8 +171,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
             try
             {
                 // Listen to incomming match messages and user connection changes
-                _socket.OnMatchPresence += OnMatchPresence;
-                _socket.OnMatchState += ReceiveMatchStateMessage;
+                _socket.ReceivedMatchPresence += OnMatchPresence;
+                _socket.ReceivedMatchState += ReceiveMatchStateMessage;
 
                 // Join the match
                 IMatch match = await _socket.JoinMatchAsync(matched);
@@ -213,8 +213,8 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
                 return;
             }
             _isLeaving = true;
-            _socket.OnMatchPresence -= OnMatchPresence;
-            _socket.OnMatchState -= ReceiveMatchStateMessage;
+            _socket.ReceivedMatchPresence -= OnMatchPresence;
+            _socket.ReceivedMatchState -= ReceiveMatchStateMessage;
 
             //Starts coroutine which is loading main menu and also disconnects player from match
             StartCoroutine(LoadMenuCoroutine());
@@ -236,7 +236,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
 
                 //Sending match state json along with opCode needed for unpacking message to server.
                 //Then server sends it to other players
-                _socket.SendMatchState(MatchId, (long)opCode, json);
+                _socket.SendMatchStateAsync(MatchId, (long)opCode, json);
             }
             catch (Exception e)
             {
@@ -419,7 +419,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnMatchPresence(object sender, IMatchPresenceEvent e)
+        private void OnMatchPresence(IMatchPresenceEvent e)
         {
             foreach (IUserPresence user in e.Joins)
             {
@@ -513,7 +513,7 @@ namespace DemoGame.Scripts.Gameplay.NetworkCommunication
 
         private void GameEnded(MatchMessageGameEnded obj)
         {
-            _socket.OnMatchPresence -= OnMatchPresence;
+            _socket.ReceivedMatchPresence -= OnMatchPresence;
         }
 
         /// <summary>

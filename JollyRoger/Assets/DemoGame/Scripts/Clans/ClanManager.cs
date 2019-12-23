@@ -47,7 +47,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.InternalServerError)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.InternalServerError)
                 {
                     Debug.LogWarning("Clan name \"" + name + "\" already in use");
                     return null;
@@ -78,7 +78,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
                 {
                     Debug.LogWarning("Unauthorized clan removal with code " + e.StatusCode + ": " + e);
                     return false;
@@ -107,7 +107,7 @@ namespace DemoGame.Scripts.Clans
         {
             try
             {
-                await client.UpdateGroupAsync(session, clan.Id, name, description, avatarUrl, null, isPublic);
+                await client.UpdateGroupAsync(session, clan.Id, name, isPublic, description, avatarUrl, null);
                 // Getting list of all clans local user has joined.
                 // In this demo a user can join only one clan at a time, so the first clan should always be the clan we updated.
                 IApiGroupList clanList = await client.ListGroupsAsync(session, name, 1, null);
@@ -195,7 +195,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.NotFound)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.NotFound)
                 {
                     Debug.LogWarning("Insufficient permissions to kick " + kickedUser.Username
                         + " from clan " + clan.Name + " or clan not found: " + e);
@@ -229,7 +229,7 @@ namespace DemoGame.Scripts.Clans
             }
             catch (ApiResponseException e)
             {
-                if (e.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                if (e.StatusCode == (long)System.Net.HttpStatusCode.BadRequest)
                 {
                     Debug.LogWarning("Insufficient permissions to promote user or clan not found");
                     return false;
@@ -255,7 +255,7 @@ namespace DemoGame.Scripts.Clans
         {
             try
             {
-                IApiGroupUserList userEnumeration = await client.ListGroupUsersAsync(session, clan.Id);
+                var userEnumeration = await client.ListGroupUsersAsync(session, clan.Id, null, 1, null);
                 List<IGroupUserListGroupUser> userList = userEnumeration.GroupUsers.ToList();
                 return userList;
             }
@@ -275,7 +275,7 @@ namespace DemoGame.Scripts.Clans
         {
             try
             {
-                IApiUserGroupList clans = await client.ListUserGroupsAsync(session);
+                IApiUserGroupList clans = await client.ListUserGroupsAsync(session, null, 1, null);
                 if (clans.UserGroups.Count() > 0)
                 {
                     IUserGroupListUserGroup userGroup = clans.UserGroups.ElementAt(0);
@@ -302,7 +302,7 @@ namespace DemoGame.Scripts.Clans
         {
             try
             {
-                IApiUserGroupList clans = await client.ListUserGroupsAsync(session, userId);
+                IApiUserGroupList clans = await client.ListUserGroupsAsync(session, userId, null, 1, null);
                 if (clans.UserGroups.Count() > 0)
                 {
                     IUserGroupListUserGroup userGroup = clans.UserGroups.ElementAt(0);

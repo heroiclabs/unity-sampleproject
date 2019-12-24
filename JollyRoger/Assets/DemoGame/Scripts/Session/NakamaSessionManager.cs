@@ -489,12 +489,7 @@ namespace DemoGame.Scripts.Session
             try
             {
                 await Client.UpdateAccountAsync(Session, username, null, avatarUrl);
-
-                // Terminate current session and log in using new username
-                PlayerPrefs.SetString("nakama.authToken", "");
-                AuthenticationResponse response = await ConnectAsync();
-
-                return response;
+                return AuthenticationResponse.UserInfoUpdated;
             }
             catch (ApiResponseException e)
             {
@@ -519,7 +514,13 @@ namespace DemoGame.Scripts.Session
                 _deviceId = PlayerPrefs.GetString("nakama.deviceId");
                 if (string.IsNullOrWhiteSpace(_deviceId) == true)
                 {
+                    // SystemInfo.deviceUniqueIdentifier is not supported in WebGL,
+                    // we generate a random one instead via System.Guid
+#if UNITY_WEBGL && !UNITY_EDITOR
+                    _deviceId = System.Guid.NewGuid().ToString();
+#else
                     _deviceId = SystemInfo.deviceUniqueIdentifier;
+#endif                    
                     PlayerPrefs.SetString("nakama.deviceId", _deviceId);
                 }
                 _deviceId += _sufix;

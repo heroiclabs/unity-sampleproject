@@ -36,6 +36,7 @@ namespace DemoGame.Scripts.Session
         /// <summary>
         /// Given device id not found on the server. New account created.
         /// </summary>
-        NewAccountCreated
+        NewAccountCreated,
+        UserInfoUpdated
     }
 }

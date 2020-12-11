@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ff77e5de4a71b148b1121c55d5a93bd, type: 3}
+  m_Name: Card0 BigShip
+  m_EditorClassIdentifier: 
+  _cardtype: 1
+  _name: Big Ship
+  _description: Medicore damage, medicore speed.
+  _sprite: {fileID: 21300000, guid: 81dbc1a5ada6a3e46ba271de5fdf2073, type: 3}
+  _cost: 4
+  _health: 100
+  _healthPerLevel: 15
+  _damage: 8
+  _damagePerLevel: 4
+  _attackeType: 0
+  _reloadTime: 1
+  _reloadTimePerLevel: -0.05
+  _moveSpeed: 2
+  _moveSpeedPerLevel: -0.01
+  _rotationSpeed: 1
+  _rotationSpeedPerLevel: 0
+  _dropRegion: 3
+  _canBeDroppedOverOtherUnits: 0
+  _visualizerPrefab: {fileID: 4477121437640225205, guid: 7805d93c4c081fc40acfa558352881cd,
+    type: 3}

@@ -1,0 +1,13 @@
+console:
+  max_message_size_bytes: 409600
+logger:
+  level: "debug"
+runtime:
+  js_entrypoint: "build/index.js"
+  js_max_count: 128
+socket:
+  max_message_size_bytes: 4096
+  max_request_size_bytes: 131072
+matchmaker:
+  interval_sec: 3
+

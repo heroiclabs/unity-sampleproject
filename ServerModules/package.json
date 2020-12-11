@@ -1,0 +1,18 @@
+{
+  "name": "pirate-panic-server",
+  "version": "1.0.0",
+  "description": "The server code for Pirate Panic game.",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nakama Authors & Contributors",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "typescript": "^4.1.3"
+  },
+  "dependencies": {
+    "nakama-runtime": "github:heroiclabs/nakama-common"
+  },
+  "keywords": []
+}

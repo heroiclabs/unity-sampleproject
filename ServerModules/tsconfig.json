@@ -1,0 +1,33 @@
+{
+  "files": [
+
+    // Pirate Panic
+    "./src/clans.ts",
+    "./src/deck.ts",
+    "./src/economy.ts",
+    "./src/main.ts",
+    "./src/quests.ts",
+    "./src/match.ts",
+
+    //  -------------------------------------------
+    //  NOTE: For Example Scene(s)
+    //        Register each TypeScript class to
+    //        parsed and compiled
+    //  -------------------------------------------
+    "./src/Example04ServerRuntimeMethod.ts"
+  ],
+  "compilerOptions": {
+    "target": "es5",
+    "outFile": "./build/index.js",
+    "strict": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "noImplicitReturns": true,
+    "typeRoots": [
+      "./node_modules"
+    ],
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
+  }
+}

@@ -1,0 +1,192 @@
+fileFormatVersion: 2
+guid: c8b5682ac5199c543a1bf115e2c5ce13
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: cannon_front 1
+    100002: cannon_front 1 1
+    100004: cannon_left 1
+    100006: cannon_left 1 1
+    100008: cannon_left 1 2
+    100010: cannon_left 1 3
+    100012: cannon_left 1 4
+    100014: cannon_left 1 5
+    100016: cannon_right 1
+    100018: cannon_right 1 1
+    100020: cannon_right 1 2
+    100022: cannon_right 1 3
+    100024: cannon_right 1 4
+    100026: cannon_right 1 5
+    100028: sail_back 1
+    100030: sail_front 1
+    100032: sail_middle 1
+    100034: //RootNode
+    100036: steering 1
+    400000: cannon_front 1
+    400002: cannon_front 1 1
+    400004: cannon_left 1
+    400006: cannon_left 1 1
+    400008: cannon_left 1 2
+    400010: cannon_left 1 3
+    400012: cannon_left 1 4
+    400014: cannon_left 1 5
+    400016: cannon_right 1
+    400018: cannon_right 1 1
+    400020: cannon_right 1 2
+    400022: cannon_right 1 3
+    400024: cannon_right 1 4
+    400026: cannon_right 1 5
+    400028: sail_back 1
+    400030: sail_front 1
+    400032: sail_middle 1
+    400034: //RootNode
+    400036: steering 1
+    2100000: wood
+    2100002: woodDark
+    2100004: iron
+    2100006: window
+    2100008: textile
+    2100010: _defaultMat
+    2300000: cannon_front 1
+    2300002: cannon_front 1 1
+    2300004: cannon_left 1
+    2300006: cannon_left 1 1
+    2300008: cannon_left 1 2
+    2300010: cannon_left 1 3
+    2300012: cannon_left 1 4
+    2300014: cannon_left 1 5
+    2300016: cannon_right 1
+    2300018: cannon_right 1 1
+    2300020: cannon_right 1 2
+    2300022: cannon_right 1 3
+    2300024: cannon_right 1 4
+    2300026: cannon_right 1 5
+    2300028: sail_back 1
+    2300030: sail_front 1
+    2300032: sail_middle 1
+    2300034: //RootNode
+    2300036: steering 1
+    3300000: cannon_front 1
+    3300002: cannon_front 1 1
+    3300004: cannon_left 1
+    3300006: cannon_left 1 1
+    3300008: cannon_left 1 2
+    3300010: cannon_left 1 3
+    3300012: cannon_left 1 4
+    3300014: cannon_left 1 5
+    3300016: cannon_right 1
+    3300018: cannon_right 1 1
+    3300020: cannon_right 1 2
+    3300022: cannon_right 1 3
+    3300024: cannon_right 1 4
+    3300026: cannon_right 1 5
+    3300028: sail_back 1
+    3300030: sail_front 1
+    3300032: sail_middle 1
+    3300034: //RootNode
+    3300036: steering 1
+    4300000: ship_light_8angles
+    4300002: cannon_front 1
+    4300004: cannon_front 1
+    4300006: cannon_left 1
+    4300008: cannon_left 1
+    4300010: cannon_left 1
+    4300012: cannon_left 1
+    4300014: cannon_left 1
+    4300016: cannon_left 1
+    4300018: cannon_right 1
+    4300020: cannon_right 1
+    4300022: cannon_right 1
+    4300024: cannon_right 1
+    4300026: cannon_right 1
+    4300028: cannon_right 1
+    4300030: sail_back 1
+    4300032: sail_front 1
+    4300034: sail_middle 1
+    4300036: steering 1
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

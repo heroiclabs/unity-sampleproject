@@ -1,0 +1,6 @@
+Source Url: 
+* https://www.theserverside.com/blog/Coffee-Talk-Java-News-Stories-and-Opinions/gitkeep-push-empty-folders-git-commit
+
+Instructions:
+* This file forces git to honor this otherwise empty folder. Keep it.
+* Remove when folder is not longer otherwise empty or no longer needed.

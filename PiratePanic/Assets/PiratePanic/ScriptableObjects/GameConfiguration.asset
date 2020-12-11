@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7957aa85c292c1a43808e3f0f99e9ad0, type: 3}
+  m_Name: GameConfiguration
+  m_EditorClassIdentifier: 
+  _sceneNameMainMenu: Scene01MainMenu
+  _sceneNameBattle: Scene02Battle
+  _startingGold: 3
+  _maxGoldCount: 10
+  _goldPerSecond: 0.5
+  _isAudioEnabled: 1
+  _audioVolume: 1
+  _isDebug: 1
+  _isDeviceIdRandomized: 1
+  _isVerboseLogging: 0
+  _isPlayerPrefsDeletedOnStart: 1

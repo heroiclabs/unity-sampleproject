@@ -43,11 +43,8 @@ namespace PiratePanic
 		}
 
 		[Header("UI Elements")]
-
 		[SerializeField] private Text _usernameText = null;
-
 		[SerializeField] private Text _dateText = null;
-
 		[SerializeField] private Text _contentText = null;
 
 		private string _messageId;

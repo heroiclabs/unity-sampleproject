@@ -6,19 +6,19 @@ var ClanNotificationCode;
 })(ClanNotificationCode || (ClanNotificationCode = {}));
 var afterJoinGroupFn = function (ctx, logger, nk, data, request) {
     var _a;
-    sendGroupNotification(nk, (_a = request.groupId, (_a !== null && _a !== void 0 ? _a : "")), ClanNotificationCode.Refresh, "New Member Joined!");
+    sendGroupNotification(nk, (_a = request.groupId) !== null && _a !== void 0 ? _a : "", ClanNotificationCode.Refresh, "New Member Joined!");
 };
 var afterKickGroupUsersFn = function (ctx, logger, nk, data, request) {
     var _a;
-    sendGroupNotification(nk, (_a = request.groupId, (_a !== null && _a !== void 0 ? _a : "")), ClanNotificationCode.Refresh, "Member(s) Have Been Kicked!");
+    sendGroupNotification(nk, (_a = request.groupId) !== null && _a !== void 0 ? _a : "", ClanNotificationCode.Refresh, "Member(s) Have Been Kicked!");
 };
 var afterLeaveGroupFn = function (ctx, logger, nk, data, request) {
     var _a;
-    sendGroupNotification(nk, (_a = request.groupId, (_a !== null && _a !== void 0 ? _a : "")), ClanNotificationCode.Refresh, "Member Left!");
+    sendGroupNotification(nk, (_a = request.groupId) !== null && _a !== void 0 ? _a : "", ClanNotificationCode.Refresh, "Member Left!");
 };
 var afterPromoteGroupUsersFn = function (ctx, logger, nk, data, request) {
     var _a;
-    sendGroupNotification(nk, (_a = request.groupId, (_a !== null && _a !== void 0 ? _a : "")), ClanNotificationCode.Refresh, "Member(s) Have Been Promoted!");
+    sendGroupNotification(nk, (_a = request.groupId) !== null && _a !== void 0 ? _a : "", ClanNotificationCode.Refresh, "Member(s) Have Been Promoted!");
 };
 var beforeDeleteGroupFn = function (ctx, logger, nk, request) {
     var _a;
@@ -26,7 +26,7 @@ var beforeDeleteGroupFn = function (ctx, logger, nk, request) {
     (_a = members.groupUsers) === null || _a === void 0 ? void 0 : _a.every(function (user) {
         var _a;
         if (user.user.userId == ctx.userId) {
-            sendGroupNotification(nk, (_a = request.groupId, (_a !== null && _a !== void 0 ? _a : "")), ClanNotificationCode.Delete, "Clan Deleted!");
+            sendGroupNotification(nk, (_a = request.groupId) !== null && _a !== void 0 ? _a : "", ClanNotificationCode.Delete, "Clan Deleted!");
             return false;
         }
         return true;
@@ -36,7 +36,7 @@ var beforeDeleteGroupFn = function (ctx, logger, nk, request) {
 function sendGroupNotification(nk, groupId, code, subject) {
     var _a, _b;
     var members = nk.groupUsersList(groupId, 100);
-    var count = (_a = members.groupUsers, (_a !== null && _a !== void 0 ? _a : [])).length;
+    var count = ((_a = members.groupUsers) !== null && _a !== void 0 ? _a : []).length;
     if (count < 1) {
         return;
     }
@@ -296,8 +296,6 @@ var InitModule = function (ctx, logger, nk, initializer) {
     initializer.registerRpc('add_random_card', rpcBuyRandomCard);
     initializer.registerRpc('handle_match_end', rpcHandleMatchEnd);
     logger.warn('Pirate Panic TypeScript loaded.');
-    initializer.registerRpc('AddNumbers', AddNumbers);
-    logger.warn('Examples TypeScript loaded.');
 };
 var afterAuthenticateDeviceFn = function (ctx, logger, nk, data, req) {
     afterAuthenticate(ctx, logger, nk, data);
@@ -306,8 +304,8 @@ var afterAuthenticateFacebookFn = function (ctx, logger, nk, data, req) {
     afterAuthenticate(ctx, logger, nk, data);
 };
 function afterAuthenticate(ctx, logger, nk, data) {
-    logger.info('after auth called, created: %s', data.create);
-    if (!data.create) {
+    logger.info('after auth called, created: %v', data.created);
+    if (!data.created) {
         return;
     }
     var initialState = {
@@ -462,16 +460,4 @@ var rpcHandleMatchEnd = function (ctx, logger, nk, payload) {
     };
     logger.debug('match %s ended', ctx.matchId);
     return JSON.stringify(response);
-};
-var AddNumbersResponse = (function () {
-    function AddNumbersResponse(result) {
-        this.Result = result;
-    }
-    return AddNumbersResponse;
-}());
-var AddNumbers = function (ctx, logger, nk, payload) {
-    var request = JSON.parse(payload);
-    var addNumbersResponse = new AddNumbersResponse(request.A + request.B);
-    logger.debug('example_03.ts, AddNumbers (%s, %s) = %s', request.A, request.B, addNumbersResponse.Result);
-    return JSON.stringify(addNumbersResponse);
 };

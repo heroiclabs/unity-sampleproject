@@ -59,14 +59,6 @@ const InitModule: nkruntime.InitModule =
     initializer.registerRpc('add_random_card', rpcBuyRandomCard);
     initializer.registerRpc('handle_match_end', rpcHandleMatchEnd);
     logger.warn('Pirate Panic TypeScript loaded.');
-
-    //  -------------------------------------------
-    //  NOTE: Set up RPCs: For Example Scene(s)
-    //        Register each TypeScript method to
-    //        be callable from C#
-    //  -------------------------------------------
-    initializer.registerRpc('AddNumbers', AddNumbers);
-    logger.warn('Examples TypeScript loaded.');
 }
 
 const afterAuthenticateDeviceFn: nkruntime.AfterHookFunction<nkruntime.Session, nkruntime.AuthenticateDeviceRequest> =
@@ -83,8 +75,8 @@ const afterAuthenticateFacebookFn: nkruntime.AfterHookFunction<nkruntime.Session
  * Set up the user after first authentication.
  */
 function afterAuthenticate(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.Session) {
-    logger.info('after auth called, created: %s', data.create);
-    if (!data.create) {
+    logger.info('after auth called, created: %v', data.created);
+    if (!data.created) {
         // Account already exists.
         return
     }

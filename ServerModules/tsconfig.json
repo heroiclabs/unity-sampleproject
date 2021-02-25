@@ -8,13 +8,6 @@
     "./src/main.ts",
     "./src/quests.ts",
     "./src/match.ts",
-
-    //  -------------------------------------------
-    //  NOTE: For Example Scene(s)
-    //        Register each TypeScript class to
-    //        parsed and compiled
-    //  -------------------------------------------
-    "./src/Example04ServerRuntimeMethod.ts"
   ],
   "compilerOptions": {
     "target": "es5",

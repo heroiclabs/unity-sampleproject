@@ -12,7 +12,7 @@
     "typescript": "^4.2.2"
   },
   "dependencies": {
-    "nakama-runtime": "github:heroiclabs/nakama-common"
+    "nakama-runtime": "github:heroiclabs/nakama-common#1cec6a31733d3c1bb8f489992235fabfa51d1f75"
   },
   "keywords": []
 }

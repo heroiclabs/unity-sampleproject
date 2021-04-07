@@ -68,6 +68,7 @@ The Unity Editor is required. Download it from <a href="https://unity3d.com/get-
 
 1. Open the Unity Project of `./PiratePanic/` in Unity Version **2020.2.1f1** or higher.
 2. Open the Unity Console Window (Unity → Windows → General → Console). Confirm there are no warnings or errors.
+3. By default, the game will attempt to communicate with port 7350 of localhost, which is the default Nakama HTTP port. If you'd like to change your host or IP, you can do so when constructing the client: https://github.com/heroiclabs/unity-sampleproject/blob/master/PiratePanic/Assets/PiratePanic/Scripts/Scene01MainMenuController.cs#L101
 
 ### 3. Play Against Yourself
 

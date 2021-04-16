@@ -32,7 +32,7 @@ namespace PiratePanic.Managers
 		//  Unity Methods   -------------------------------
 		protected void Start()
 		{
-			GameHelper.MoveToRootAndDontDestroyOnLoad(gameObject);
+			GameObject.DontDestroyOnLoad(gameObject);
 		}
 
 		//  Other Methods   -------------------------------

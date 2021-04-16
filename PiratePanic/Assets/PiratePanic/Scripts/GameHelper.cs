@@ -23,30 +23,8 @@ namespace PiratePanic
 	/// <summary>
 	/// Stores commonly used methods by various systems.
 	/// </summary>
-	public static class GameHelper 
+	public static class GameHelper
 	{
-		/// <summary>
-		/// DontDestroyOnLoad requires the object be on root. This handles that.
-		/// 
-		/// Workflow: Keep the object parented in the Scene for organization,
-		/// at runtime call this to persist it between scenes.
-		/// 
-		/// </summary>
-		/// <param name="gameObject"></param>
-		public static void MoveToRootAndDontDestroyOnLoad(GameObject gameObject)
-		{
-			// Move to root
-			Transform parent = gameObject.transform.parent;
-			if (parent != null)
-			{
-				gameObject.transform.SetParent(null);
-			}
-
-			// Do operation which requires root
-			GameObject.DontDestroyOnLoad(gameObject);
-
-		}
-
 		public static void DoFadeCanvasGroupsIn(List<CanvasGroup> canvasGroups)
 		{
 			GameHelper.DoFadeCanvasGroups(canvasGroups, 0, 1, 1, 0f, 0.05f);

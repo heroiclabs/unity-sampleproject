@@ -28,11 +28,5 @@ namespace PiratePanic
 
 		//  Fields ----------------------------------------
 		[SerializeField] private GameConfiguration gameConfiguration = null;
-
-		//  Unity Methods   -------------------------------
-		protected void Start()
-		{
-			GameHelper.MoveToRootAndDontDestroyOnLoad(gameObject);
-		}
 	}
 }

@@ -29,13 +29,6 @@ namespace PiratePanic.Managers
 		[SerializeField]
 		private List<AudioSource> _audioSources = new List<AudioSource>();
 
-		//  Unity Methods   -------------------------------
-		protected void Start()
-		{
-			GameObject.DontDestroyOnLoad(gameObject);
-		}
-
-		//  Other Methods   -------------------------------
 		public void PlayAudioClip(string audioClipName)
 		{
 			foreach (AudioClip audioClip in _audioClips)
@@ -62,9 +55,6 @@ namespace PiratePanic.Managers
 					audioSource.volume = _gameConfiguration.AudioVolume;
 					audioSource.clip = audioClip;
 					audioSource.Play();
-
-					//Debug.Log($"PlayAudioClip() audioClip.name={audioClip.name} at { audioSource.volume}");
-
 					return;
 				}
 			}
@@ -73,6 +63,11 @@ namespace PiratePanic.Managers
 		public void PlayButtonClick()
 		{
 			PlayAudioClip(SoundConstants.ButtonClick01);
+		}
+
+		protected void Start()
+		{
+			GameObject.DontDestroyOnLoad(gameObject);
 		}
 	}
 }

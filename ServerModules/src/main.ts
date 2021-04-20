@@ -75,7 +75,6 @@ const afterAuthenticateFacebookFn: nkruntime.AfterHookFunction<nkruntime.Session
  * Set up the user after first authentication.
  */
 function afterAuthenticate(ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, data: nkruntime.Session) {
-    logger.info('after auth called, created: %v', data.created);
     if (!data.created) {
         // Account already exists.
         return
@@ -115,6 +114,8 @@ function afterAuthenticate(ctx: nkruntime.Context, logger: nkruntime.Logger, nk:
         logger.error('storageWrite error: %q', error);
         throw error;
     }
+
+    logger.debug('new user id: %s account data initialised', ctx.userId);
 }
 
 /**

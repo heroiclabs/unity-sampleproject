@@ -40,12 +40,13 @@ namespace PiratePanic
 		// PlayerPrefs
 		public const string DeviceIdKey = "nakama.deviceId";
 		public static string AuthTokenKey = "nakama.authToken";
+        public static string RefreshTokenKey = "nakama.refreshToken";
 
 		// Urls
 		public const string DocumentationUrl_PiratePanic = "https://github.com/heroiclabs/unity-sampleproject";
 		public const string DocumentationUrl_Nakama = "https://heroiclabs.com/docs/index.html";
 		public const string DeveloperConsoleUrl = "http://localhost:7351/";
 
-		
+
 	}
 }

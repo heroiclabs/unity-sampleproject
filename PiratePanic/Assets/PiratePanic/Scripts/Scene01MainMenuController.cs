@@ -19,6 +19,7 @@ using Facebook.Unity;
 using Nakama;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -63,113 +64,21 @@ namespace PiratePanic
             _profileButton.onClick.AddListener(() => _profileMenuUI.Show());
         }
 
-        private void Start()
+        private async void Start()
         {
-            InitializeGame();
-        }
 
-        private async void InitializeGame()
-        {
-            string deviceId = GetDeviceId();
-
-            if (!string.IsNullOrEmpty(deviceId))
-            {
-                PlayerPrefs.SetString(GameConstants.DeviceIdKey, deviceId);
-            }
+            _loadingMenu.Show(true);
 
             if (_connection.Session == null)
             {
-                _loadingMenu.Show(true);
+                string deviceId = GetDeviceId();
 
-                try
+                if (!string.IsNullOrEmpty(deviceId))
                 {
-#if !UNITY_EDITOR
-                    FB.Init(() =>
-                    {
-                        FB.ActivateApp();
-                    });
-#endif
-                }
-                catch (Exception e)
-                {
-                    // Not supported on mac
-#if !UNITY_OSX_STANDALONE
-                    Debug.LogWarning("Error initializing facebook: " + e.Message);
-#endif
+                    PlayerPrefs.SetString(GameConstants.DeviceIdKey, deviceId);
                 }
 
-                var client = new Client("http", "localhost", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
-                client.Timeout = 5;
-
-                var socket = client.NewSocket(useMainThread: true);
-
-                string storedToken = PlayerPrefs.GetString(GameConstants.AuthTokenKey, null);
-                bool isStoredToken = !string.IsNullOrEmpty(storedToken);
-                ISession session = null;
-
-
-                if (isStoredToken)
-                {
-                    session = Nakama.Session.Restore(storedToken);
-                }
-
-                bool isExpiredToken = isStoredToken && session.HasExpired(DateTime.UtcNow);
-
-                if (!isStoredToken || isExpiredToken)
-                {
-                    try
-                    {
-                        session = await client.AuthenticateDeviceAsync(deviceId);
-                    }
-                    catch (ApiResponseException e)
-                    {
-                        Debug.LogWarning("Error authenticating device: " + e.Message);
-                        Application.Quit();
-                        return;
-                    }
-                }
-
-                try
-                {
-                    await socket.ConnectAsync(session);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogWarning("Error connecting socket: " + e.Message);
-                }
-
-                _loadingMenu.Hide(true);
-
-                PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
-                IApiAccount account;
-
-                try
-                {
-                    account = await client.GetAccountAsync(session);
-                }
-                catch (ApiResponseException e)
-                {
-                    Debug.LogError("Error getting user account: " + e.Message);
-
-                    if (e.StatusCode == 404)
-                    {
-                        Debug.LogWarning("invalid auth token. deleting... " +
-                            "please restart application.");
-
-                        PlayerPrefs.DeleteKey(GameConstants.AuthTokenKey);
-                    }
-
-                    //  -------------------------------------------
-                    //  NOTE: Quit the game, if error.
-                    //        In production, consider additional
-                    //        logic to retry the connection with
-                    //        exponential backoff.
-                    //  -------------------------------------------
-                    Application.Quit();
-                    return;
-                }
-
-                _connection.Init(client, socket, account, session);
+                await InitializeGame(deviceId);
             }
 
             // Provide Nakama connection to UI elements that need it.
@@ -179,11 +88,97 @@ namespace PiratePanic
             _cardsMenuUI.Init(_connection);
             _clanCreationPanel.Init(_connection);
             _profilePopup.Init(_connection, _profileUpdatePanel);
-            _profileUpdatePanel.Init(_connection, deviceId);
+            _profileUpdatePanel.Init(_connection, GetDeviceId());
             _clansMenuUI.Init(_connection, _profilePopup);
             _friendsMenuUI.Init(_connection);
             _leaderboardMenuUI.Init(_connection, _profilePopup);
             _profileMenuUI.Init(_connection, _profileUpdatePanel);
+
+            _loadingMenu.Hide(true);
+        }
+
+        private void InitializeFacebook()
+        {
+            try
+            {
+#if !UNITY_EDITOR
+                FB.Init(() =>
+                {
+                    FB.ActivateApp();
+                });
+#endif
+            }
+            catch (Exception e)
+            {
+                // Not supported on mac
+#if !UNITY_OSX_STANDALONE
+                Debug.LogWarning("Error initializing facebook: " + e.Message);
+#endif
+            }
+        }
+
+        private async Task InitializeGame(string deviceId)
+        {
+            InitializeFacebook();
+
+            var client = new Client("http", "localhost", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
+            client.Timeout = 5;
+
+            var socket = client.NewSocket(useMainThread: true);
+
+            string authToken = PlayerPrefs.GetString(GameConstants.AuthTokenKey, null);
+            bool isAuthToken = !string.IsNullOrEmpty(authToken);
+
+            string refreshToken = PlayerPrefs.GetString(GameConstants.RefreshTokenKey, null);
+
+            ISession session = null;
+
+            // refresh token can be null/empty for initial migration of client to using refresh tokens.
+            if (isAuthToken)
+            {
+                session = Session.Restore(authToken, refreshToken);
+
+                // Check whether a session is close to expiry.
+                if (session.HasExpired(DateTime.UtcNow.AddDays(1)))
+                {
+                    try
+                    {
+                        // get a new access token
+                        session = await client.SessionRefreshAsync(session);
+                    }
+                    catch (ApiResponseException)
+                    {
+                        // get a new refresh token
+                        session = await client.AuthenticateDeviceAsync(deviceId);
+                        PlayerPrefs.SetString(GameConstants.RefreshTokenKey, session.RefreshToken);
+                    }
+
+                    PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
+                }
+            }
+
+
+            try
+            {
+                await socket.ConnectAsync(session);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Error connecting socket: " + e.Message);
+            }
+
+            IApiAccount account = null;
+
+            try
+            {
+                account = await client.GetAccountAsync(session);
+            }
+            catch (ApiResponseException e)
+            {
+                Debug.LogError("Error getting user account: " + e.Message);
+            }
+
+            _connection.Init(client, socket, account, session);
         }
 
         private string GetDeviceId()

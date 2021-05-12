@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "com.heroiclabs.nakama-unity": {
-      "version": "https://github.com/heroiclabs/nakama-unity.git?path=/Packages/Nakama#master",
+      "version": "https://github.com/heroiclabs/nakama-unity.git?path=/Packages/Nakama#f2eae3e54483885a0e190a97ef1d1e2619e8870f",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.modules.unitywebrequest": "1.0.0"
       },
-      "hash": "f9d99b9e0406719288943693c2752bfa2162ff79"
+      "hash": "f2eae3e54483885a0e190a97ef1d1e2619e8870f"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -45,10 +45,12 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.5",
+      "version": "2.0.7",
       "depth": 0,
       "source": "registry",
-      "dependencies": {},
+      "dependencies": {
+        "com.unity.test-framework": "1.1.9"
+      },
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
@@ -59,7 +61,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.20",
+      "version": "1.1.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -70,7 +72,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.timeline": {
-      "version": "1.4.5",
+      "version": "1.4.7",
       "depth": 0,
       "source": "registry",
       "dependencies": {

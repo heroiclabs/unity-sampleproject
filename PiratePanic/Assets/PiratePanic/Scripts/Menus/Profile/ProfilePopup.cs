@@ -20,10 +20,10 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Menu showing <see cref="ProfilePanel"/> on enter showing users data.
-    /// </summary>
-    public class ProfilePopup : Menu
+	/// <summary>
+	/// Menu showing <see cref="ProfilePanel"/> on enter showing users data.
+	/// </summary>
+	public class ProfilePopup : Menu
 	{
 		/// <summary>
 		/// Reference to panel containing profile information

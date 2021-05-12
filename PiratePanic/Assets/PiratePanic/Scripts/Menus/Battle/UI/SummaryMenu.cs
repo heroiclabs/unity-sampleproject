@@ -21,11 +21,11 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Menu showed at the end of a match.
-    /// Shows who win as well as displays the funds gained for the match.
-    /// </summary>
-    public class SummaryMenu : Menu
+	/// <summary>
+	/// Menu showed at the end of a match.
+	/// Shows who win as well as displays the funds gained for the match.
+	/// </summary>
+	public class SummaryMenu : Menu
 	{
 		/// <summary>
 		/// Displays the reward gained from the match.
@@ -75,8 +75,8 @@ namespace PiratePanic
 			_score = score;
 		}
 
-        public override void Show(bool isMuteButtonClick = false)
-        {
+		public override void Show(bool isMuteButtonClick = false)
+		{
 			base.Show(isMuteButtonClick);
 
 			if (_placement == MatchEndPlacement.Winner)
@@ -92,6 +92,6 @@ namespace PiratePanic
 				_rewardText.text = $"+{_gems}";
 			}
 
-        }
+		}
 	}
 }

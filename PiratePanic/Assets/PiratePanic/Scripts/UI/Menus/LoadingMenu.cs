@@ -19,11 +19,11 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Menu displayed to the user at the beginning of the game.
-    /// Blocks any action before connection with the server can be established.
-    /// </summary>
-    public class LoadingMenu : Menu
+	/// <summary>
+	/// Menu displayed to the user at the beginning of the game.
+	/// Blocks any action before connection with the server can be established.
+	/// </summary>
+	public class LoadingMenu : Menu
 	{
 		[Space]
 		/// <summary>

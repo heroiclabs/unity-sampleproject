@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 
 namespace PiratePanic
 {
-    public class UsernameSearcher : MonoBehaviour
+	public class UsernameSearcher : MonoBehaviour
 	{
 		/// <summary>
 		/// Struct used for capsulating user search results loaded from database
@@ -114,7 +114,7 @@ namespace PiratePanic
 				return;
 			}
 
-			var searchRequest = new Dictionary<string, string>(){{"username", text}};
+			var searchRequest = new Dictionary<string, string>() { { "username", text } };
 
 			//nakama rpc method parameter
 			string payload = searchRequest.ToJson();

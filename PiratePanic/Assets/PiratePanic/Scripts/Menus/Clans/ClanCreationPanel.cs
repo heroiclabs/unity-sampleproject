@@ -22,10 +22,10 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Menu responsible for creating a new clan.
-    /// </summary>
-    public class ClanCreationPanel : Menu
+	/// <summary>
+	/// Menu responsible for creating a new clan.
+	/// </summary>
+	public class ClanCreationPanel : Menu
 	{
 		public event Action<IApiGroup> OnClanCreated;
 
@@ -111,7 +111,7 @@ namespace PiratePanic
 			}
 		}
 
-		public override void Hide (bool isMuteSoundManager = false)
+		public override void Hide(bool isMuteSoundManager = false)
 		{
 			CreateClan();
 			base.Hide(isMuteSoundManager);

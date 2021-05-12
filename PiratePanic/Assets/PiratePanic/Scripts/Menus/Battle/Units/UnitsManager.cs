@@ -22,7 +22,7 @@ using System;
 
 namespace PiratePanic
 {
-    public class UnitsManager
+	public class UnitsManager
 	{
 		public event Action<Unit> OnAfterUnitInstantiated;
 

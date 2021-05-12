@@ -22,7 +22,7 @@ using System;
 namespace PiratePanic
 {
 
-    public class FriendsMenuUI : Menu
+	public class FriendsMenuUI : Menu
 	{
 		[Space]
 		/// <summary>
@@ -112,9 +112,9 @@ namespace PiratePanic
 			_refreshButton.onClick.AddListener(ActualizeFriendsList);
 		}
 
-        public async override void Show(bool isMuteButtonClick = false)
-        {
-            base.Show(isMuteButtonClick);
+		public async override void Show(bool isMuteButtonClick = false)
+		{
+			base.Show(isMuteButtonClick);
 
 			//loading friends data
 			var friends = await _connection.Client.ListFriendsAsync(_connection.Session);
@@ -123,7 +123,7 @@ namespace PiratePanic
 				//refreshing ui view with downloaded data
 				RefreshFriendsListUI(friends);
 			}
-        }
+		}
 
 		/// <summary>
 		/// Populating friend list with elements created basing on loaded friends list from database
@@ -214,7 +214,7 @@ namespace PiratePanic
 			try
 			{
 				string[] usernames = new[] { _usernameSearcher.InputFieldValue };
-				await _connection.Client.AddFriendsAsync(_connection.Session, new string[] {}, usernames);
+				await _connection.Client.AddFriendsAsync(_connection.Session, new string[] { }, usernames);
 				ActualizeFriendsList();
 			}
 			catch (Exception e) //catching exception, if program entered this code adding friend operation was not successfully completed

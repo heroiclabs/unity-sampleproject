@@ -21,10 +21,10 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Panel displaying all cards currently held by the local user.
-    /// </summary>
-    public class HandPanel : MonoBehaviour
+	/// <summary>
+	/// Panel displaying all cards currently held by the local user.
+	/// </summary>
+	public class HandPanel : MonoBehaviour
 	{
 
 		/// <summary>

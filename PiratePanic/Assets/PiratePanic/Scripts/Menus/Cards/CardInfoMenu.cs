@@ -19,10 +19,10 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Popup window displaying informations of supplied <see cref="CardData"/>.
-    /// </summary>
-    public class CardInfoMenu : Menu
+	/// <summary>
+	/// Popup window displaying informations of supplied <see cref="CardData"/>.
+	/// </summary>
+	public class CardInfoMenu : Menu
 	{
 		/// <summary>
 		/// Textfield displaying the name of <see cref="_displayedCard"/>.

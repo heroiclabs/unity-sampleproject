@@ -18,9 +18,9 @@ using Nakama;
 
 namespace PiratePanic
 {
-    public enum MatchEndPlacement
-    {
-        Loser = 0,
-        Winner = 1
-    }
+	public enum MatchEndPlacement
+	{
+		Loser = 0,
+		Winner = 1
+	}
 }

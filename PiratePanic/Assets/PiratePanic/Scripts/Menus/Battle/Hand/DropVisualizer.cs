@@ -21,10 +21,10 @@ using UnityEngine;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Object represending dragged card shown upon hovering it over allowed drop region.
-    /// </summary>
-    public class DropVisualizer : MonoBehaviour
+	/// <summary>
+	/// Object represending dragged card shown upon hovering it over allowed drop region.
+	/// </summary>
+	public class DropVisualizer : MonoBehaviour
 	{
 		/// <summary>
 		/// The speed at which this object will scale up/down upon creation/destruction.

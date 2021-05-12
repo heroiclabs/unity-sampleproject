@@ -19,26 +19,26 @@ using Nakama;
 
 namespace PiratePanic
 {
-    public class MatchEndRequest
-    {
-        [DataMember(Name = "matchId")]
-        public string MatchId { get; private set; }
+	public class MatchEndRequest
+	{
+		[DataMember(Name = "matchId")]
+		public string MatchId { get; private set; }
 
-        [DataMember(Name = "placement")]
+		[DataMember(Name = "placement")]
 		public MatchEndPlacement Placement { get; private set; }
 
-        [DataMember(Name = "time")]
-        public float Time { get; private set; }
+		[DataMember(Name = "time")]
+		public float Time { get; private set; }
 
-        [DataMember(Name = "towersDestroyed")]
-        public int TowersDestroyed { get; private set; }
+		[DataMember(Name = "towersDestroyed")]
+		public int TowersDestroyed { get; private set; }
 
-        public MatchEndRequest(string matchId, MatchEndPlacement placement, float time, int towersDestroyed)
-        {
+		public MatchEndRequest(string matchId, MatchEndPlacement placement, float time, int towersDestroyed)
+		{
 			MatchId = matchId;
-            Placement = placement;
-            Time = time;
-            TowersDestroyed = towersDestroyed;
-        }
-    }
+			Placement = placement;
+			Time = time;
+			TowersDestroyed = towersDestroyed;
+		}
+	}
 }

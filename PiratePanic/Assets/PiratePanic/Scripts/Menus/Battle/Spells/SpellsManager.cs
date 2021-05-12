@@ -20,10 +20,10 @@ using UnityEngine;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Manager resolving spells activation. Contains also object pooling mechanic for spells.
-    /// </summary>
-    public class SpellsManager
+	/// <summary>
+	/// Manager resolving spells activation. Contains also object pooling mechanic for spells.
+	/// </summary>
+	public class SpellsManager
 	{
 		/// <summary>
 		/// List of disabled spells objects

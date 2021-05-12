@@ -30,7 +30,7 @@ namespace PiratePanic
 	/// </summary>
 	public class CardInfoSidePanel : MonoBehaviour
 	{
-		public event Action<Card, CardData> OnAfterCardUpgraded = delegate {};
+		public event Action<Card, CardData> OnAfterCardUpgraded = delegate { };
 
 		/// <summary>
 		/// Textfield containing the name of <see cref="_displayedCard"/>.
@@ -131,9 +131,9 @@ namespace PiratePanic
 		{
 			try
 			{
-				string requestPayload = new Dictionary<string, string>(){{"id", _displayedCard.Id}}.ToJson();
+				string requestPayload = new Dictionary<string, string>() { { "id", _displayedCard.Id } }.ToJson();
 				var upgradeResponse = await _connection.Client.RpcAsync(_connection.Session, "upgrade_card", requestPayload);
-				var upgradedCardData =  upgradeResponse.Payload.FromJson<CardData>();
+				var upgradedCardData = upgradeResponse.Payload.FromJson<CardData>();
 				OnAfterCardUpgraded(_displayedCard, upgradedCardData);
 			}
 			catch (ApiResponseException e)

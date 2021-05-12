@@ -24,10 +24,10 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Panel used to change username and avatar of a user account.
-    /// </summary>
-    public class ProfileUpdatePanel : Menu
+	/// <summary>
+	/// Panel used to change username and avatar of a user account.
+	/// </summary>
+	public class ProfileUpdatePanel : Menu
 	{
 		/// <summary>
 		/// Begins account migration process by invoking
@@ -122,12 +122,12 @@ namespace PiratePanic
 			_facebookSuccessPanel.Hide(true);
 		}
 
-        public override void Show(bool isMuteButtonClick = false)
-        {
-            base.Show(isMuteButtonClick);
-            _usernameText.text = _connection.Account.User.Username;
+		public override void Show(bool isMuteButtonClick = false)
+		{
+			base.Show(isMuteButtonClick);
+			_usernameText.text = _connection.Account.User.Username;
 			_avatarImage.sprite = _avatarSprites.GetSpriteByName(_connection.Account.User.AvatarUrl);
-        }
+		}
 
 		/// <summary>
 		/// Changes displayed avatar to next available.

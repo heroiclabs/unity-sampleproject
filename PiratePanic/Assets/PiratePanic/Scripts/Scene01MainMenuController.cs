@@ -27,183 +27,183 @@ namespace PiratePanic
 {
 	/// <summary>
 	/// Handles user authentication with Nakama server,
-    /// and adds all panels to the scene and handles navigation in menu.
+	/// and adds all panels to the scene and handles navigation in menu.
 	///
 	/// See <a href="https://heroiclabs.com/docs/unity-client-guide/#authenticate">Nakama Docs</a> for more info.
 	///
 	/// </summary>
-    public class Scene01MainMenuController : MonoBehaviour
-    {
-        [SerializeField] BattleMenuUI _battleMenuUI;
-        [SerializeField] ClansMenuUI _clansMenuUI;
-        [SerializeField] FriendsMenuUI _friendsMenuUI;
-        [SerializeField] LeaderboardsMenuUI _leaderboardMenuUI;
-        [SerializeField] ProfileMenuUI _profileMenuUI;
-        [SerializeField] CardsMenuUI _cardsMenuUI;
-        [SerializeField] ClanCreationPanel _clanCreationPanel;
-        [SerializeField] LoadingMenu _loadingMenu;
-        [SerializeField] ProfilePopup _profilePopup;
-        [SerializeField] ProfileUpdatePanel _profileUpdatePanel;
-        [SerializeField] NotificationPopup _notificationPopup;
+	public class Scene01MainMenuController : MonoBehaviour
+	{
+		[SerializeField] BattleMenuUI _battleMenuUI;
+		[SerializeField] ClansMenuUI _clansMenuUI;
+		[SerializeField] FriendsMenuUI _friendsMenuUI;
+		[SerializeField] LeaderboardsMenuUI _leaderboardMenuUI;
+		[SerializeField] ProfileMenuUI _profileMenuUI;
+		[SerializeField] CardsMenuUI _cardsMenuUI;
+		[SerializeField] ClanCreationPanel _clanCreationPanel;
+		[SerializeField] LoadingMenu _loadingMenu;
+		[SerializeField] ProfilePopup _profilePopup;
+		[SerializeField] ProfileUpdatePanel _profileUpdatePanel;
+		[SerializeField] NotificationPopup _notificationPopup;
 
-        [SerializeField] Button _battleButton;
-        [SerializeField] Button _cardsButton;
-        [SerializeField] Button _clansButton;
-        [SerializeField] Button _friendsButton;
-        [SerializeField] Button _leaderboardsButton;
-        [SerializeField] Button _profileButton;
-        [SerializeField] private GameConnection _connection;
+		[SerializeField] Button _battleButton;
+		[SerializeField] Button _cardsButton;
+		[SerializeField] Button _clansButton;
+		[SerializeField] Button _friendsButton;
+		[SerializeField] Button _leaderboardsButton;
+		[SerializeField] Button _profileButton;
+		[SerializeField] private GameConnection _connection;
 
-        private void Awake()
-        {
-            _battleButton.onClick.AddListener(() => _battleMenuUI.Show ());
-            _cardsButton.onClick.AddListener(() => _cardsMenuUI.Show());
-            _clansButton.onClick.AddListener(() => _clansMenuUI.Show());
-            _friendsButton.onClick.AddListener(() => _friendsMenuUI.Show());
-            _leaderboardsButton.onClick.AddListener(() => _leaderboardMenuUI.Show());
-            _profileButton.onClick.AddListener(() => _profileMenuUI.Show());
-        }
+		private void Awake()
+		{
+			_battleButton.onClick.AddListener(() => _battleMenuUI.Show());
+			_cardsButton.onClick.AddListener(() => _cardsMenuUI.Show());
+			_clansButton.onClick.AddListener(() => _clansMenuUI.Show());
+			_friendsButton.onClick.AddListener(() => _friendsMenuUI.Show());
+			_leaderboardsButton.onClick.AddListener(() => _leaderboardMenuUI.Show());
+			_profileButton.onClick.AddListener(() => _profileMenuUI.Show());
+		}
 
-        private async void Start()
-        {
+		private async void Start()
+		{
 
-            _loadingMenu.Show(true);
+			_loadingMenu.Show(true);
 
-            if (_connection.Session == null)
-            {
-                string deviceId = GetDeviceId();
+			if (_connection.Session == null)
+			{
+				string deviceId = GetDeviceId();
 
-                if (!string.IsNullOrEmpty(deviceId))
-                {
-                    PlayerPrefs.SetString(GameConstants.DeviceIdKey, deviceId);
-                }
+				if (!string.IsNullOrEmpty(deviceId))
+				{
+					PlayerPrefs.SetString(GameConstants.DeviceIdKey, deviceId);
+				}
 
-                await InitializeGame(deviceId);
-            }
+				await InitializeGame(deviceId);
+			}
 
-            // Provide Nakama connection to UI elements that need it.
-            _battleMenuUI.Init(_connection);
-            _loadingMenu.Init(_connection);
-            _notificationPopup.Init(_connection);
-            _cardsMenuUI.Init(_connection);
-            _clanCreationPanel.Init(_connection);
-            _profilePopup.Init(_connection, _profileUpdatePanel);
-            _profileUpdatePanel.Init(_connection, GetDeviceId());
-            _clansMenuUI.Init(_connection, _profilePopup);
-            _friendsMenuUI.Init(_connection);
-            _leaderboardMenuUI.Init(_connection, _profilePopup);
-            _profileMenuUI.Init(_connection, _profileUpdatePanel);
+			// Provide Nakama connection to UI elements that need it.
+			_battleMenuUI.Init(_connection);
+			_loadingMenu.Init(_connection);
+			_notificationPopup.Init(_connection);
+			_cardsMenuUI.Init(_connection);
+			_clanCreationPanel.Init(_connection);
+			_profilePopup.Init(_connection, _profileUpdatePanel);
+			_profileUpdatePanel.Init(_connection, GetDeviceId());
+			_clansMenuUI.Init(_connection, _profilePopup);
+			_friendsMenuUI.Init(_connection);
+			_leaderboardMenuUI.Init(_connection, _profilePopup);
+			_profileMenuUI.Init(_connection, _profileUpdatePanel);
 
-            _loadingMenu.Hide(true);
-        }
+			_loadingMenu.Hide(true);
+		}
 
-        private void InitializeFacebook()
-        {
-            try
-            {
+		private void InitializeFacebook()
+		{
+			try
+			{
 #if !UNITY_EDITOR
                 FB.Init(() =>
                 {
                     FB.ActivateApp();
                 });
 #endif
-            }
-            catch (Exception e)
-            {
-                // Not supported on mac
+			}
+			catch (Exception e)
+			{
+				// Not supported on mac
 #if !UNITY_OSX_STANDALONE
-                Debug.LogWarning("Error initializing facebook: " + e.Message);
+				Debug.LogWarning("Error initializing facebook: " + e.Message);
 #endif
-            }
-        }
+			}
+		}
 
-        private async Task InitializeGame(string deviceId)
-        {
-            InitializeFacebook();
+		private async Task InitializeGame(string deviceId)
+		{
+			InitializeFacebook();
 
-            var client = new Client("http", "localhost", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
-            client.Timeout = 5;
+			var client = new Client("http", "localhost", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
+			client.Timeout = 5;
 
-            var socket = client.NewSocket(useMainThread: true);
+			var socket = client.NewSocket(useMainThread: true);
 
-            string authToken = PlayerPrefs.GetString(GameConstants.AuthTokenKey, null);
-            bool isAuthToken = !string.IsNullOrEmpty(authToken);
+			string authToken = PlayerPrefs.GetString(GameConstants.AuthTokenKey, null);
+			bool isAuthToken = !string.IsNullOrEmpty(authToken);
 
-            string refreshToken = PlayerPrefs.GetString(GameConstants.RefreshTokenKey, null);
+			string refreshToken = PlayerPrefs.GetString(GameConstants.RefreshTokenKey, null);
 
-            ISession session = null;
+			ISession session = null;
 
-            // refresh token can be null/empty for initial migration of client to using refresh tokens.
-            if (isAuthToken)
-            {
-                session = Session.Restore(authToken, refreshToken);
+			// refresh token can be null/empty for initial migration of client to using refresh tokens.
+			if (isAuthToken)
+			{
+				session = Session.Restore(authToken, refreshToken);
 
-                // Check whether a session is close to expiry.
-                if (session.HasExpired(DateTime.UtcNow.AddDays(1)))
-                {
-                    try
-                    {
-                        // get a new access token
-                        session = await client.SessionRefreshAsync(session);
-                    }
-                    catch (ApiResponseException)
-                    {
-                        // get a new refresh token
-                        session = await client.AuthenticateDeviceAsync(deviceId);
-                        PlayerPrefs.SetString(GameConstants.RefreshTokenKey, session.RefreshToken);
-                    }
+				// Check whether a session is close to expiry.
+				if (session.HasExpired(DateTime.UtcNow.AddDays(1)))
+				{
+					try
+					{
+						// get a new access token
+						session = await client.SessionRefreshAsync(session);
+					}
+					catch (ApiResponseException)
+					{
+						// get a new refresh token
+						session = await client.AuthenticateDeviceAsync(deviceId);
+						PlayerPrefs.SetString(GameConstants.RefreshTokenKey, session.RefreshToken);
+					}
 
-                    PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
-                }
-            }
+					PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
+				}
+			}
 
 
-            try
-            {
-                await socket.ConnectAsync(session);
-            }
-            catch (Exception e)
-            {
-                Debug.LogWarning("Error connecting socket: " + e.Message);
-            }
+			try
+			{
+				await socket.ConnectAsync(session);
+			}
+			catch (Exception e)
+			{
+				Debug.LogWarning("Error connecting socket: " + e.Message);
+			}
 
-            IApiAccount account = null;
+			IApiAccount account = null;
 
-            try
-            {
-                account = await client.GetAccountAsync(session);
-            }
-            catch (ApiResponseException e)
-            {
-                Debug.LogError("Error getting user account: " + e.Message);
-            }
+			try
+			{
+				account = await client.GetAccountAsync(session);
+			}
+			catch (ApiResponseException e)
+			{
+				Debug.LogError("Error getting user account: " + e.Message);
+			}
 
-            _connection.Init(client, socket, account, session);
-        }
+			_connection.Init(client, socket, account, session);
+		}
 
-        private string GetDeviceId()
-        {
-            string deviceId = "";
+		private string GetDeviceId()
+		{
+			string deviceId = "";
 
 			deviceId = PlayerPrefs.GetString(GameConstants.DeviceIdKey);
 
 			if (string.IsNullOrWhiteSpace(deviceId))
 			{
-                // SystemInfo.deviceUniqueIdentifier is not supported in WebGL,
-                // we generate a random one instead via System.Guid
+				// SystemInfo.deviceUniqueIdentifier is not supported in WebGL,
+				// we generate a random one instead via System.Guid
 #if UNITY_WEBGL && !UNITY_EDITOR
 				deviceId = System.Guid.NewGuid().ToString();
 #else
-                deviceId = SystemInfo.deviceUniqueIdentifier;
+				deviceId = SystemInfo.deviceUniqueIdentifier;
 #endif
-            }
+			}
 
-            return deviceId;
-        }
+			return deviceId;
+		}
 
-        private async void OnApplicationQuit()
-        {
-            await _connection.Socket.CloseAsync();
-        }
-    }
+		private async void OnApplicationQuit()
+		{
+			await _connection.Socket.CloseAsync();
+		}
+	}
 }

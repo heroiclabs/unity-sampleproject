@@ -40,7 +40,7 @@ namespace PiratePanic
 		// PlayerPrefs
 		public const string DeviceIdKey = "nakama.deviceId";
 		public static string AuthTokenKey = "nakama.authToken";
-        public static string RefreshTokenKey = "nakama.refreshToken";
+		public static string RefreshTokenKey = "nakama.refreshToken";
 
 		// Urls
 		public const string DocumentationUrl_PiratePanic = "https://github.com/heroiclabs/unity-sampleproject";

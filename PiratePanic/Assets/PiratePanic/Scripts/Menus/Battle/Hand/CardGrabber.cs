@@ -21,11 +21,11 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// UI element responsible for displaying card in hand.
-    /// Can be drag around and dropped back in hand or on the battlefield to send message to host.
-    /// </summary>
-    public class CardGrabber : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+	/// <summary>
+	/// UI element responsible for displaying card in hand.
+	/// Can be drag around and dropped back in hand or on the battlefield to send message to host.
+	/// </summary>
+	public class CardGrabber : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 	{
 		/// <summary>
 		/// Image displaying card's sprite.
@@ -351,5 +351,5 @@ namespace PiratePanic
 			}
 		}
 
-			}
+	}
 }

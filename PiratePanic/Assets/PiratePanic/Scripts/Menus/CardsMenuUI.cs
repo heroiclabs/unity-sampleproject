@@ -25,11 +25,11 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Menu responsible for building users deck.
-    /// Players can view their cards and upgrade them to next level.
-    /// </summary>
-    public class CardsMenuUI : Menu
+	/// <summary>
+	/// Menu responsible for building users deck.
+	/// Players can view their cards and upgrade them to next level.
+	/// </summary>
+	public class CardsMenuUI : Menu
 	{
 		/// <summary>
 		/// Prefab of a single card holder.
@@ -127,8 +127,8 @@ namespace PiratePanic
 			_cardInfoSidePanel.OnAfterCardUpgraded += OnAfterCardUpgraded;
 		}
 
-        private async void OnAfterCardUpgraded(Card oldCard, CardData upgradedCardData)
-        {
+		private async void OnAfterCardUpgraded(Card oldCard, CardData upgradedCardData)
+		{
 			_lastSelectedSlot = null;
 
 			try
@@ -153,12 +153,12 @@ namespace PiratePanic
 				_cardCollection.UpgradeCard(oldCard.Id, upgradedCardData);
 				UpdateStoredCardsUI(_cardCollection.GetStoredList());
 			}
-        }
+		}
 
-        /// <summary>
-        /// Updates the cards displayed by each <see cref="CardSlotUI"/> in user's deck.
-        /// </summary>
-        private void UpdateDeckCardsUI(List<string> deckCards)
+		/// <summary>
+		/// Updates the cards displayed by each <see cref="CardSlotUI"/> in user's deck.
+		/// </summary>
+		private void UpdateDeckCardsUI(List<string> deckCards)
 		{
 			foreach (CardSlotUI cardSlot in _deckCardsDisplays)
 			{
@@ -379,8 +379,8 @@ namespace PiratePanic
 			base.Show(isMuteButtonClick);
 		}
 
-        private int GetGems(string wallet)
-        {
+		private int GetGems(string wallet)
+		{
 			Dictionary<string, int> currency = wallet.FromJson<Dictionary<string, int>>();
 
 			if (currency.ContainsKey("gems"))
@@ -389,12 +389,12 @@ namespace PiratePanic
 			}
 
 			return 0;
-        }
+		}
 
-        /// <summary>
-        /// Retrieves gems count owned by the user and sets the value in UI.
-        /// </summary>
-        private void UpdateGemsUI()
+		/// <summary>
+		/// Retrieves gems count owned by the user and sets the value in UI.
+		/// </summary>
+		private void UpdateGemsUI()
 		{
 			_fundsText.text = GetGems(_connection.Account.Wallet).ToString();
 			_buyRandomCardButton.interactable = HasGemsForUpgrade();

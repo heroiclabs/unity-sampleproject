@@ -29,13 +29,13 @@ namespace PiratePanic
 		/// <summary>
 		/// List of all cards owned by the deck owner that are currently in the deck.
 		/// </summary>
-		[DataMember(Name="deckCards")]
-	    public readonly Dictionary<string, CardData> deckCards = new Dictionary<string, CardData>();
+		[DataMember(Name = "deckCards")]
+		public readonly Dictionary<string, CardData> deckCards = new Dictionary<string, CardData>();
 
 		/// <summary>
 		/// List of all cards owned by the deck owner that are currently not in the deck.
 		/// </summary>
-		[DataMember(Name="storedCards")]
+		[DataMember(Name = "storedCards")]
 		public readonly Dictionary<string, CardData> storedCards = new Dictionary<string, CardData>();
 
 		private List<string> _sortedDeckCards;

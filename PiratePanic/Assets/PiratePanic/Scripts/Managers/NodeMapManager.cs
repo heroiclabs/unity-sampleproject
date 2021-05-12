@@ -19,10 +19,10 @@ using UnityEngine;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Generates node hex map on scene start
-    /// </summary>
-    public class NodeMapManager : MonoBehaviour
+	/// <summary>
+	/// Generates node hex map on scene start
+	/// </summary>
+	public class NodeMapManager : MonoBehaviour
 	{
 		/// <summary>
 		/// Size of map

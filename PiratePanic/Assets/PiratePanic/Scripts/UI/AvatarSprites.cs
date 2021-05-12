@@ -19,18 +19,18 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// All available avatar icons for the player.
-    /// </summary>
-    [CreateAssetMenu(menuName = GameConstants.CreateAssetMenu_AvatarSprites)]
-    public class AvatarSprites : ScriptableObject
-    {
-        public Sprite[] Sprites => _sprites;
-        [SerializeField] private Sprite[] _sprites;
+	/// <summary>
+	/// All available avatar icons for the player.
+	/// </summary>
+	[CreateAssetMenu(menuName = GameConstants.CreateAssetMenu_AvatarSprites)]
+	public class AvatarSprites : ScriptableObject
+	{
+		public Sprite[] Sprites => _sprites;
+		[SerializeField] private Sprite[] _sprites;
 
-        public Sprite GetSpriteByName(string name)
-        {
-            return _sprites.FirstOrDefault<Sprite>(sprite => sprite.name == name) ?? _sprites.First();;
-        }
-    }
+		public Sprite GetSpriteByName(string name)
+		{
+			return _sprites.FirstOrDefault<Sprite>(sprite => sprite.name == name) ?? _sprites.First(); ;
+		}
+	}
 }

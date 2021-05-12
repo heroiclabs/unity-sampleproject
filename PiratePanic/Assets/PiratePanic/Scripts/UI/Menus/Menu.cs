@@ -76,7 +76,7 @@ namespace PiratePanic
 			{
 				SoundManager.Instance.PlayButtonClick();
 			}
-			
+
 			_canvasGroup.alpha = 0;
 			_canvasGroup.blocksRaycasts = false;
 			IsShown = false;

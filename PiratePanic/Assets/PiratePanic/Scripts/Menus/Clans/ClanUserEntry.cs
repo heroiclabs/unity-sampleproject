@@ -21,12 +21,12 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Single user entry in <see cref="ClansMenuUI"/>'s member list.
-    /// Contains UI needed to display basic user information aswell as allow for
-    /// multiple clan related operations, such as kicking and promoting users.
-    /// </summary>
-    public class ClanUserEntry : MonoBehaviour
+	/// <summary>
+	/// Single user entry in <see cref="ClansMenuUI"/>'s member list.
+	/// Contains UI needed to display basic user information aswell as allow for
+	/// multiple clan related operations, such as kicking and promoting users.
+	/// </summary>
+	public class ClanUserEntry : MonoBehaviour
 	{
 		/// <summary>
 		/// Text field containing username.

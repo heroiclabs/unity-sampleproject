@@ -24,10 +24,10 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Manages leaderboards UI.
-    /// </summary>
-    public class LeaderboardsMenuUI : Menu
+	/// <summary>
+	/// Manages leaderboards UI.
+	/// </summary>
+	public class LeaderboardsMenuUI : Menu
 	{
 		/// <summary>
 		/// Parent for all leaderboards records.

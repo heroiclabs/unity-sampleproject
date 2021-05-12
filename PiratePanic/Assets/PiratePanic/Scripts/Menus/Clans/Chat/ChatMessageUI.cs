@@ -86,5 +86,5 @@ namespace PiratePanic
 			//Setting content
 			_contentText.text = content;
 		}
-    }
+	}
 }

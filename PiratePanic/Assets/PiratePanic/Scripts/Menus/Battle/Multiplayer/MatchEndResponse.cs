@@ -18,12 +18,12 @@ using System.Runtime.Serialization;
 
 namespace PiratePanic
 {
-    public class MatchEndResponse
-    {
-        [DataMember(Name = "gems")]
+	public class MatchEndResponse
+	{
+		[DataMember(Name = "gems")]
 		public int Gems { get; private set; }
 
-        [DataMember(Name = "score")]
-        public int Score { get; private set; }
-    }
+		[DataMember(Name = "score")]
+		public int Score { get; private set; }
+	}
 }

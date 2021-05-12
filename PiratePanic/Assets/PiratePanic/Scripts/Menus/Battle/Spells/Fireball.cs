@@ -21,10 +21,10 @@ using System;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Fireball spell
-    /// </summary>
-    public class Fireball : MonoBehaviour, ISpell
+	/// <summary>
+	/// Fireball spell
+	/// </summary>
+	public class Fireball : MonoBehaviour, ISpell
 	{
 		public event Action<ISpell> OnHide;
 

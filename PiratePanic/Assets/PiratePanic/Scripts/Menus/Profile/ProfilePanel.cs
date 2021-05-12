@@ -25,10 +25,10 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Panel displaying user's stats.
-    /// </summary>
-    public class ProfilePanel : MonoBehaviour
+	/// <summary>
+	/// Panel displaying user's stats.
+	/// </summary>
+	public class ProfilePanel : MonoBehaviour
 	{
 		/// <summary>
 		/// Button sending friend request to currently shown user.

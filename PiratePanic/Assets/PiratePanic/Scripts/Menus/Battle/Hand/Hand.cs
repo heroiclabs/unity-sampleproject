@@ -30,7 +30,7 @@ namespace PiratePanic
 	/// </summary>
 	public class Hand : MonoBehaviour
 	{
-				/// <summary>
+		/// <summary>
 		/// Maximum hand size for every player.
 		/// </summary>
 		[SerializeField] private int _handSize = 3;
@@ -53,8 +53,8 @@ namespace PiratePanic
 
 			try
 			{
-				var response =  await connection.Client.RpcAsync(connection.Session, "load_user_cards", "");
-				_cardCollection = response.Payload.FromJson<CardCollection>();;
+				var response = await connection.Client.RpcAsync(connection.Session, "load_user_cards", "");
+				_cardCollection = response.Payload.FromJson<CardCollection>(); ;
 			}
 			catch (Exception e)
 			{

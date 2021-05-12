@@ -18,15 +18,15 @@
 
 namespace PiratePanic
 {
-    public class Card
-    {
-        public string Id { get; private set; }
-        public CardData CardData { get; private set; }
+	public class Card
+	{
+		public string Id { get; private set; }
+		public CardData CardData { get; private set; }
 
-        public Card(string id, CardData cardData)
-        {
-            Id = id;
-            CardData = cardData;
-        }
-    }
+		public Card(string id, CardData cardData)
+		{
+			Id = id;
+			CardData = cardData;
+		}
+	}
 }

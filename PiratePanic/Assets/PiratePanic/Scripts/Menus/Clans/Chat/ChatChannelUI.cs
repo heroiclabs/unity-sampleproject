@@ -23,10 +23,10 @@ using Nakama.TinyJson;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Manages user interface for chat
-    /// </summary>
-    public class ChatChannelUI : MonoBehaviour
+	/// <summary>
+	/// Manages user interface for chat
+	/// </summary>
+	public class ChatChannelUI : MonoBehaviour
 	{
 		[Header("Prefabs")]
 
@@ -253,7 +253,7 @@ namespace PiratePanic
 
 			try
 			{
-				var content = new Dictionary<string, string>(){{"content", _chatInputField.text}}.ToJson();
+				var content = new Dictionary<string, string>() { { "content", _chatInputField.text } }.ToJson();
 				_connection.Socket.WriteChatMessageAsync(_chatChannel.Id, content);
 			}
 			catch (Exception e)

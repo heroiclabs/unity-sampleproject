@@ -125,5 +125,5 @@ namespace PiratePanic
 				_secondStackedCard.gameObject.SetActive(true);
 			}
 		}
-			}
+	}
 }

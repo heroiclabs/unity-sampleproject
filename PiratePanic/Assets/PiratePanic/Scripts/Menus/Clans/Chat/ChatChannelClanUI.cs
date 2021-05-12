@@ -128,8 +128,8 @@ namespace PiratePanic
 		{
 			GameObject textGO = Instantiate(_activeUserTextPrefab, _activeUsersListPanel) as GameObject;
 			Text text = textGO.GetComponent<Text>();
-            text.text = username;
-            return text;
+			text.text = username;
+			return text;
 		}
 	}
 }

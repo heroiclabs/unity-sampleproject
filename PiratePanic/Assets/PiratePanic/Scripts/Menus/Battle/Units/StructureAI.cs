@@ -19,10 +19,10 @@ using System.Collections.Generic;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// AI of nonmovable objects that could attack, like i.e. forts
-    /// </summary>
-    public class StructureAI : UnitAI
+	/// <summary>
+	/// AI of nonmovable objects that could attack, like i.e. forts
+	/// </summary>
+	public class StructureAI : UnitAI
 	{
 		protected override void Update()
 		{

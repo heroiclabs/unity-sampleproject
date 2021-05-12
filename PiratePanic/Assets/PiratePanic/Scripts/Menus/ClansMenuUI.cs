@@ -24,11 +24,11 @@ using UnityEngine.UI;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Responsible for managing UI of the Clan managing panel.
-    /// Holds references to all UI elements and handles user input.
-    /// </summary>
-    public class ClansMenuUI : Menu
+	/// <summary>
+	/// Responsible for managing UI of the Clan managing panel.
+	/// Holds references to all UI elements and handles user input.
+	/// </summary>
+	public class ClansMenuUI : Menu
 	{
 		[Space]
 		/// <summary>
@@ -162,7 +162,8 @@ namespace PiratePanic
 		/// </summary>
 		private void Awake()
 		{
-			_clanCreationPrefab.OnClanCreated += clan => {
+			_clanCreationPrefab.OnClanCreated += clan =>
+			{
 				_state.UserClan = clan;
 				_state.SubMenu = ClanSubMenu.Details;
 				RefreshUI(_state);
@@ -178,12 +179,14 @@ namespace PiratePanic
 			_clanSearchButton.onClick.AddListener(SearchClan);
 			_leaveClanButton.onClick.AddListener(LeaveClan);
 			_joinClanButton.onClick.AddListener(JoinDisplayedClan);
-			_searchTabButton.onClick.AddListener(() => {
+			_searchTabButton.onClick.AddListener(() =>
+			{
 				_state.DisplayedClan = null;
 				_state.SubMenu = ClanSubMenu.Search;
 				RefreshUI(_state);
 			});
-			_detailsTabButton.onClick.AddListener(() => {
+			_detailsTabButton.onClick.AddListener(() =>
+			{
 				_state.SubMenu = ClanSubMenu.Details;
 				RefreshUI(_state);
 			});
@@ -233,7 +236,7 @@ namespace PiratePanic
 			{
 				Debug.LogWarning("An exception has occured when joining clan with code " + e.StatusCode + ": " + e.Message);
 			}
-            catch (Exception e)
+			catch (Exception e)
 			{
 				Debug.LogWarning("An interface exception has occured when joining clan " + e.Message);
 			}
@@ -252,10 +255,10 @@ namespace PiratePanic
 				_state.SubMenu = ClanSubMenu.Search;
 				RefreshUI(_state);
 			}
-            catch(ApiResponseException e)
-            {
+			catch (ApiResponseException e)
+			{
 				Debug.LogWarning("An API exception has occured when leaving clan. Code: " + e.StatusCode + ", Message: " + e.Message);
-            }
+			}
 			catch (Exception e)
 			{
 				Debug.LogWarning("An interface exception has occured when leaving clan: " + e.Message);
@@ -293,8 +296,8 @@ namespace PiratePanic
 			}
 		}
 
-        public override async void Show(bool isMuteButtonClick = false)
-        {
+		public override async void Show(bool isMuteButtonClick = false)
+		{
 			base.Show(isMuteButtonClick);
 
 			try
@@ -319,7 +322,7 @@ namespace PiratePanic
 			RefreshUI(_state);
 
 			_connection.Socket.ReceivedNotification += NotificationReceived;
-        }
+		}
 
 		/// <summary>
 		/// Invoked when server returns a list of clans we searched for.

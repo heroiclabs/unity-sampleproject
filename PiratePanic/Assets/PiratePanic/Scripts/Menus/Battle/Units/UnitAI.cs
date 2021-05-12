@@ -20,10 +20,10 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-    /// <summary>
-    /// Base class for unit AI.
-    /// </summary>
-    public class UnitAI : MonoBehaviour
+	/// <summary>
+	/// Base class for unit AI.
+	/// </summary>
+	public class UnitAI : MonoBehaviour
 	{
 		public struct UnitMove
 		{

@@ -22,10 +22,10 @@ using System;
 namespace PiratePanic
 {
 
-    /// <summary>
-    /// Panel for showing friends data in UI
-    /// </summary>
-    public class FriendPanel : MonoBehaviour
+	/// <summary>
+	/// Panel for showing friends data in UI
+	/// </summary>
+	public class FriendPanel : MonoBehaviour
 	{
 
 		/// <summary>
@@ -206,7 +206,7 @@ namespace PiratePanic
 			else
 			{
 				//unblock this friend
-				await _connection.Client.DeleteFriendsAsync(_connection.Session, new []{ _friend.User.Id });
+				await _connection.Client.DeleteFriendsAsync(_connection.Session, new[] { _friend.User.Id });
 			}
 		}
 
@@ -236,7 +236,7 @@ namespace PiratePanic
 			_acceptInviteButton.gameObject.SetActive(true);
 		}
 
-				/// <summary>
+		/// <summary>
 		/// Toggle if panel is opened or closed
 		/// </summary>
 		private void TogglePanel()

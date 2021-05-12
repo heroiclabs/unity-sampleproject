@@ -205,5 +205,10 @@ namespace PiratePanic
 
             return deviceId;
         }
+
+        private async void OnApplicationQuit()
+        {
+            await _connection.Socket.CloseAsync();
+        }
     }
 }

@@ -502,5 +502,10 @@ namespace PiratePanic
                 _stateManager.LeaveGame();
             }
         }
+
+        private async void OnApplicationQuit()
+        {
+            await _connection.Socket.CloseAsync();
+        }
     }
 }

@@ -75,7 +75,7 @@ function sendGroupNotification(nk: nkruntime.Nakama, groupId: string, code: Clan
         return;
     }
 
-    const notifications: nkruntime.NotificationRequest[] = new Array(count);
+    const notifications: nkruntime.NotificationRequest[] = [];
     members.groupUsers?.forEach(user => {
         const n: nkruntime.NotificationRequest = {
             code: code,

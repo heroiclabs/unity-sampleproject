@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-using System;
 using System.Collections;
 using UnityEngine;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Handles animations for GroupUnits
 	/// </summary>
@@ -87,10 +85,10 @@ namespace PiratePanic
 
 		private void StartDestroySubunitAnimationCurve(SubUnit subunit)
 		{
-			StartCoroutine(DestrouSubunitAnimationCoroutine(subunit));
+			StartCoroutine(DestroySubunitAnimationCoroutine(subunit));
 		}
 
-		private IEnumerator DestrouSubunitAnimationCoroutine(SubUnit subunit)
+		private IEnumerator DestroySubunitAnimationCoroutine(SubUnit subunit)
 		{
 			subunit.Animator.SetTrigger("Death");
 			yield return new WaitForSeconds(1);

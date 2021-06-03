@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 
-
 namespace PiratePanic
 {
-
 	public enum AttackType
 	{
 		Simple,

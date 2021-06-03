@@ -26,7 +26,6 @@ namespace PiratePanic
 	/// </summary>
 	public class HandPanel : MonoBehaviour
 	{
-
 		/// <summary>
 		/// Parent transform all dragged cards are attached to during drag.
 		/// This will ensure they will be always on top of other cards.
@@ -53,13 +52,11 @@ namespace PiratePanic
 		/// </summary>
 		[SerializeField] private List<Transform> _cardSlots = null;
 
-
 		[SerializeField] private RectTransform _handRegion = null;
 		[SerializeField] private RectTransform _allyHalf = null;
 		[SerializeField] private RectTransform _allySpawn = null;
 		[SerializeField] private RectTransform _enemyHalf = null;
 		[SerializeField] private RectTransform _enemySpawn = null;
-
 
 		/// <summary>
 		/// List of cards being currently in user's hand.
@@ -69,7 +66,7 @@ namespace PiratePanic
 		/// <summary>
 		/// Invoked whenever user plays a card.
 		/// </summary>
-		public event Action<MatchMessageCardPlayRequest> OnCardPlayed;
+		public event Action<PlayedCard> OnCardPlayed;
 
 		/// <summary>
 		/// Invoked whenever user clicks on a card in hand.
@@ -96,7 +93,6 @@ namespace PiratePanic
 		{
 			this._stateManager = stateManager;
 			this._connection = connection;
-			_stateManager.OnCardCancelled += CancelPlay;
 		}
 
 		/// <summary>
@@ -173,22 +169,20 @@ namespace PiratePanic
 
 			string id = _connection.Session.UserId;
 			int index = _cardsInHand.IndexOf(grabber);
-			//_cardsInHand.RemoveAt(index);
-			MatchMessageCardPlayRequest message = new MatchMessageCardPlayRequest(
-				id, grabber.Card, index, dropPosition.x, dropPosition.y, dropPosition.z);
 
-			OnCardPlayed?.Invoke(message);
+			var playedCard = new PlayedCard(id, grabber.Card, dropPosition.x, dropPosition.y, dropPosition.z, index);
+
+			OnCardPlayed?.Invoke(playedCard);
 			CurrentlyGrabbedCard = null;
-			//Destroy(grabber.gameObject);
 		}
 
 		/// <summary>
 		/// Prevents given card from being played.
 		/// Returns it to user's hand.
 		/// </summary>
-		private void CancelPlay(MatchMessageCardCanceled message)
+		private void CancelPlay(int cardSlotIndex)
 		{
-			CardGrabber grabber = _cardsInHand[message.CardSlotIndex];
+			CardGrabber grabber = _cardsInHand[cardSlotIndex];
 			grabber.OnDragStarted += StartCardDrag;
 			grabber.OnCardReturned += ReturnCard;
 			grabber.OnCardPlayed += PlayCard;
@@ -198,11 +192,11 @@ namespace PiratePanic
 		/// <summary>
 		/// Removes played card grabber from the game.
 		/// </summary>
-		public void ResolveCardPlay(MatchMessageCardPlayed message)
+		public void ResolveCardPlay(int cardSlotIndex)
 		{
-			CardGrabber grabber = _cardsInHand[message.CardSlotIndex];
-			grabber.Resolve(message);
-			_cardsInHand.RemoveAt(message.CardSlotIndex);
+			CardGrabber grabber = _cardsInHand[cardSlotIndex];
+			grabber.Resolve();
+			_cardsInHand.RemoveAt(cardSlotIndex);
 			Destroy(grabber.gameObject);
 		}
 	}

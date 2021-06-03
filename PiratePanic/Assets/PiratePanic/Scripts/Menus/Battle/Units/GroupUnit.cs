@@ -19,7 +19,6 @@ using System.Collections.Generic;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Unit containing some subunits with separate attack values and health
 	/// </summary>

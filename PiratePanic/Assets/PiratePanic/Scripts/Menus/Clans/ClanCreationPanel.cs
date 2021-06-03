@@ -115,7 +115,6 @@ namespace PiratePanic
 		{
 			CreateClan();
 			base.Hide(isMuteSoundManager);
-
 		}
 	}
 }

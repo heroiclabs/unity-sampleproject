@@ -23,7 +23,6 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Core gameplay manager. Handles card playing, game ending and initialization.
 	/// </summary>
@@ -45,61 +44,35 @@ namespace PiratePanic
 		/// </summary>
 		private float _timerStart;
 
-		[Header("Hands")]
 		/// <summary>
 		/// Reference to the hand side bar with cards.
 		/// </summary>
 		[SerializeField] private HandPanel _localHandPanel = null;
 
 		/// <summary>
-		/// Local user hand manager.
-		/// Used only by host.
+		/// User hand model.
 		/// </summary>
-		[SerializeField] private Hand _localHand = null;
+		private ReplicatedList<Card> _hand = new ReplicatedList<Card>();
 
 		/// <summary>
-		/// Opponent hand manager.
-		/// Used only by host.
-		/// </summary>
-		[SerializeField] private Hand _opponentHand = null;
+	    /// All cards played within this match for a user.
+    	/// </summary>
+		private ReplicatedList<PlayedCard> _playedCards = new ReplicatedList<PlayedCard>();
 
-		[Header("Gold")]
+		/// <summary>
+	    /// The card collection of a user.
+    	/// </summary>
+		private Replicated<CardCollection> _cardCollection = new Replicated<CardCollection>();
+
 		/// <summary>
 		/// Reference to the bottom panel displaying current gold.
 		/// </summary>
 		[SerializeField] private GoldPanel _localGoldPanel = null;
 
 		/// <summary>
-		/// Local user gold manager.
-		/// Used only by host.
+		/// The gold of a user.
 		/// </summary>
-		[SerializeField] private Gold _localGold = null;
-
-		/// <summary>
-		/// Opponent golr manager
-		/// Used only by host.
-		/// </summary>
-		[SerializeField] private Gold _opponentGold = null;
-
-		/// <summary>
-		/// List of towers owned by the local user.
-		/// </summary>
-		private List<Unit> _allyTowers;
-
-		/// <summary>
-		/// List of towers owned by the opponent.
-		/// </summary>
-		private List<Unit> _enemyTowers;
-
-		/// <summary>
-		/// Local user castle reference.
-		/// </summary>
-		private Unit _allyCastle;
-
-		/// <summary>
-		/// Opponent castle reference.
-		/// </summary>
-		private Unit _enemyCastle;
+		private Replicated<int> _gold = null;
 
 		/// <summary>
 		/// 2d array of nodes units can move to during a match.
@@ -120,12 +93,27 @@ namespace PiratePanic
 
 		protected override void Awake()
 		{
-			_stateManager = new GameStateManager(_connection);
-			_stateManager.OnCardRequested += OnCardRequested;
-			_stateManager.OnCardPlayed += OnCardPlayed;
-			_stateManager.OnStartingHandReceived += OnStartingHandReceived;
+			_playedCards.CanAdd = (playedCard) => {
+				int cost = playedCard.CardData.GetCardInfo().Cost;
+				_gold.ForClient(card.PlayerId) < cost;
+			};
 
-			_localHandPanel.OnCardPlayed += OnCardRequested;
+			DrawCards(3);
+
+			Card newCard = userHand.DrawCard();
+
+			bool isHost = _connection.BattleConnection.HostId == _connection.Session.UserId;
+			Vector3 position = new Vector3(message.X, message.Y, message.Z);
+			Vector2Int nodePosition = ScreenToNodePos(position, isHost, message.Card.CardData.GetCardInfo().DropRegion);
+			Node node = Nodes[nodePosition.x, nodePosition.y];
+
+			if (node != null && (node.Unit == null || message.Card.CardData.GetCardInfo().CanBeDroppedOverOtherUnits))
+			{
+				Card newCard = userHand.DrawCard();
+			}
+
+			_stateManager = new GameStateManager(_connection);
+			_localHandPanel.OnCardPlayed += HandleUICardPlayed;
 			_localHandPanel.Init(_connection, _stateManager);
 
 			_summary.SetBackButtonHandler(() =>
@@ -133,9 +121,6 @@ namespace PiratePanic
 				_summary.Hide();
 				_stateManager.LeaveGame();
 			});
-
-			_localHand.Init(_connection);
-			_opponentHand.Init(_connection);
 
 			_unitsManager = new UnitsManager(_connection, _stateManager);
 			_unitsManager.OnAfterUnitInstantiated += HandleAfterUnitInstantiated;
@@ -154,7 +139,6 @@ namespace PiratePanic
 				string opponentId = match.Presences.First().UserId;
 				_connection.BattleConnection.OpponentId = opponentId;
 				_connection.BattleConnection.HostId = opponentId;
-				SetInitialPlayerState();
 			}
 			else
 			{
@@ -170,10 +154,7 @@ namespace PiratePanic
 			if (_connection.BattleConnection.HostId == _connection.Session.UserId)
 			{
 				_unitsManager.BuildStartingStructures(_connection.Session.UserId);
-				SendStartingHand(_connection.Session.UserId);
-
 				_unitsManager.BuildStartingStructures(_connection.BattleConnection.OpponentId);
-				SendStartingHand(_connection.BattleConnection.OpponentId);
 
 				_timerStart = Time.unscaledTime;
 			}
@@ -218,114 +199,37 @@ namespace PiratePanic
 		}
 
 		/// <summary>
-		/// Selects a number of cards equal to <see cref="Hand._cardIdsInHand"/> from players deck
-		/// and sends them to that player.
+		/// Takes the first card from user's deck and places it in hand.
+		/// If there are no cards left in deck, shuffles all already played
+		/// cards and puts them in deck.
 		/// </summary>
-		private void SendStartingHand(string userId)
+		private Card DrawCard()
 		{
-			Hand hand = userId == _connection.BattleConnection.HostId ? _localHand : _opponentHand;
-			List<Card> cards = hand.DrawInitialCards();
-			MatchMessageStartingHand message = new MatchMessageStartingHand(userId, cards);
-
-			if (userId == _connection.BattleConnection.HostId)
-			{
-				_stateManager.SendMatchStateMessageSelf(MatchMessageType.StartingHand, message);
-			}
-			else
-			{
-				_stateManager.SendMatchStateMessage(MatchMessageType.StartingHand, message);
-				_opponentGold.Restart();
-			}
+			int index = UnityEngine.Random.Range(0, _cardCollection.GetDeckList().Count);
+			string randId = _cardCollection.GetDeckList()[index];
+			return _cardCollection.GetDeckCard(randId);
 		}
 
-		/// <summary>
-		/// Adds cards to local user's hand.
-		/// </summary>
-		private void OnStartingHandReceived(MatchMessageStartingHand message)
+		private async List<Card> DrawCards(int numCards)
 		{
-			if (message.PlayerId == _connection.Session.UserId)
-			{
-				for (int i = 0; i < message.Cards.Count; i++)
-				{
-					_localHandPanel.DrawCard(message.Cards[i], i);
-				}
-
-				_localGold.Restart();
-				_localGoldPanel.Init(_localGold);
-			}
-		}
-
-		/// <summary>
-		/// User requested card play.
-		/// </summary>
-		private void OnCardRequested(MatchMessageCardPlayRequest message)
-		{
-			HandleCardRequest(message, _localHand, _localGold);
+			var response = await _connection.Client.RpcAsync(_connection.Session, "load_user_cards", "");
+			_cardCollection = response.Payload.FromJson<CardCollection>();
 		}
 
 		/// <summary>
 		/// Handles card play request.
-		/// If user playing the card has insufficiend gold or used card can not be played on specified node,
+		/// If user playing the card has insufficient gold or used card can not be played on specified node,
 		/// a cancel message is sent to that card owner and its effects don't resolve.
 		/// </summary>
-		private void HandleCardRequest(MatchMessageCardPlayRequest message, Hand hand, Gold gold)
+		private async void HandleUICardPlayed(PlayedCard card)
 		{
-			int cost = message.Card.CardData.GetCardInfo().Cost;
-
-			if (gold.CurrentGold < cost)
+			try
 			{
-				SendCardCanceledMessage(message);
+				await _playedCards.Add(card);
 			}
-			else
+			catch (ReplicationException e)
 			{
-				bool isHost = _connection.BattleConnection.HostId == _connection.Session.UserId;
-				Vector3 position = new Vector3(message.X, message.Y, message.Z);
-				Vector2Int nodePosition = ScreenToNodePos(position, isHost, message.Card.CardData.GetCardInfo().DropRegion);
-				Node node = Nodes[nodePosition.x, nodePosition.y];
-
-				if (node != null && (node.Unit == null || message.Card.CardData.GetCardInfo().CanBeDroppedOverOtherUnits))
-				{
-					SendCardPlayedMessage(message, hand, nodePosition);
-				}
-				else
-				{
-					SendCardCanceledMessage(message);
-				}
-			}
-		}
-
-		/// <summary>
-		/// Requests card play.
-		/// </summary>
-		private void SendCardPlayedMessage(MatchMessageCardPlayRequest message, Hand userHand, Vector2Int nodePosition)
-		{
-			Card newCard = userHand.DrawCard();
-
-			var matchMessageCardPlayed = new MatchMessageCardPlayed(
-				message.PlayerId,
-				message.Card,
-				message.CardSlotIndex,
-				newCard,
-				nodePosition.x,
-				nodePosition.y);
-
-			_stateManager.SendMatchStateMessage(MatchMessageType.CardPlayed, matchMessageCardPlayed);
-			_stateManager.SendMatchStateMessageSelf(MatchMessageType.CardPlayed, matchMessageCardPlayed);
-		}
-
-		/// <summary>
-		/// Cancels played card and returns it to its owner's hand.
-		/// </summary>
-		private void SendCardCanceledMessage(MatchMessageCardPlayRequest message)
-		{
-			MatchMessageCardCanceled cardCanceled = new MatchMessageCardCanceled(message.PlayerId, message.CardSlotIndex);
-			if (message.PlayerId == _connection.Session.UserId)
-			{
-				_stateManager.SendMatchStateMessageSelf(MatchMessageType.CardCanceled, cardCanceled);
-			}
-			else
-			{
-				_stateManager.SendMatchStateMessage(MatchMessageType.CardCanceled, cardCanceled);
+				// TODO handle cancel
 			}
 		}
 
@@ -335,20 +239,13 @@ namespace PiratePanic
 		/// Card owner draws a new card from their deck.
 		/// </summary>
 		/// <param name="message"></param>
-		private void OnCardPlayed(MatchMessageCardPlayed message)
+		private void OnCardPlayed(PlayedCard card)
 		{
-			if (message.PlayerId == _connection.Session.UserId)
-			{
-				SoundManager.Instance.PlayAudioClip(SoundConstants.CardDrop01);
+			SoundManager.Instance.PlayAudioClip(SoundConstants.CardDrop01);
 
-				_localHandPanel.ResolveCardPlay(message);
-				_localHandPanel.DrawCard(message.Card, message.CardSlotIndex);
-				_localGold.ChangeGoldCount(-message.Card.CardData.GetCardInfo().Cost);
-			}
-			else if (_connection.BattleConnection.HostId == _connection.Session.UserId)
-			{
-				_opponentGold.ChangeGoldCount(-message.Card.CardData.GetCardInfo().Cost);
-			}
+			_localHandPanel.ResolveCardPlay(card.HandIndex);
+			_localHandPanel.DrawCard(card.Card, card.HandIndex);
+			_gold -= card.Card.CardData.GetCardInfo().Cost;
 		}
 
 		/// <summary>

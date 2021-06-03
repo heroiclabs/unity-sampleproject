@@ -342,7 +342,7 @@ namespace PiratePanic
 		/// <summary>
 		/// Invoked when card play was allowed.
 		/// </summary>
-		public void Resolve(MatchMessageCardPlayed message)
+		public void Resolve()
 		{
 			if (_isVisualized)
 			{
@@ -350,6 +350,5 @@ namespace PiratePanic
 				_isVisualized = false;
 			}
 		}
-
 	}
 }

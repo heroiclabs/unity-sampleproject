@@ -19,7 +19,6 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Used for playing effects animations
 	/// </summary>

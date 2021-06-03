@@ -18,7 +18,6 @@ using System;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Element that could be damaged
 	/// </summary>

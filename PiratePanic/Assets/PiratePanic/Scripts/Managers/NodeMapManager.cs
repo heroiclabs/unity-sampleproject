@@ -18,7 +18,6 @@ using UnityEngine;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Generates node hex map on scene start
 	/// </summary>

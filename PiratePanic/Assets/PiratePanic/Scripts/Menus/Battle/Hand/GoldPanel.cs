@@ -20,7 +20,6 @@ using UnityEngine.UI;
 
 namespace PiratePanic
 {
-
 	/// <summary>
 	/// Panel displaying current in-game gold ammout.
 	/// Visible during a match at the bottom of the screen.
@@ -38,48 +37,25 @@ namespace PiratePanic
 		[SerializeField] private List<Image> _coinsImages = null;
 
 		/// <summary>
-		/// Gold manager used to determine current gold owned by the local player.
+		/// Current gold owned by the local player.
 		/// </summary>
-		private Gold _goldManager;
+		public Replicated<int> Gold { get; set; }
 
 		/// <summary>
 		/// Updates the displayed gold count.
 		/// </summary>
 		private void Update()
 		{
-			if (_goldManager != null)
-			{
-				SetGold(_goldManager.CurrentGold);
-			}
-		}
-
-
-		/// <summary>
-		/// Initializes this panel.
-		/// </summary>
-		public void Init(Gold goldManager)
-		{
-			_goldManager = goldManager;
-			SetGold(_goldManager.CurrentGold);
-		}
-
-		/// <summary>
-		/// Fills coin images depending on the current gold count.
-		/// Updates <see cref="_goldCounter"/>.
-		/// </summary>
-		private void SetGold(float count)
-		{
-			int goldCount = Mathf.FloorToInt(count);
-			_goldCounter.text = goldCount.ToString();
+			_goldCounter.text = Gold.ToString();
 			for (int i = 0; i < _coinsImages.Count; i++)
 			{
-				if (i < goldCount)
+				if (i < Gold)
 				{
 					_coinsImages[i].fillAmount = 1;
 				}
-				else if (i == goldCount)
+				else if (i == Gold)
 				{
-					_coinsImages[i].fillAmount = count - goldCount;
+					_coinsImages[i].fillAmount = count - Gold;
 				}
 				else
 				{

@@ -16,7 +16,6 @@
 
 namespace PiratePanic
 {
-
 	public enum UnitType
 	{
 		MainFort,

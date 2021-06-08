@@ -156,7 +156,12 @@ namespace PiratePanic
 					PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
 				}
 			}
-
+			else
+			{
+				session = await client.AuthenticateDeviceAsync(deviceId);
+				PlayerPrefs.SetString(GameConstants.AuthTokenKey, session.AuthToken);
+				PlayerPrefs.SetString(GameConstants.RefreshTokenKey, session.RefreshToken);
+			}
 
 			try
 			{

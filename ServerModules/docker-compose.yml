@@ -15,20 +15,18 @@ services:
       - "8080:8080"
   nakama:
     container_name: nakama
-    image: heroiclabs/nakama:3.1.0
+    build: .
     entrypoint:
       - "/bin/sh"
       - "-ecx"
       - >
           /nakama/nakama migrate up --database.address root@cockroachdb:26257 &&
-          exec /nakama/nakama --name nakama1 --config /nakama/data/modules/local.yml --database.address root@cockroachdb:26257
+          exec /nakama/nakama --name nakama1 --config /nakama/data/local.yml --database.address root@cockroachdb:26257
     restart: always
     links:
       - "cockroachdb:db"
     depends_on:
       - cockroachdb
-    volumes:
-      - ./:/nakama/data/modules
     expose:
       - "7349"
       - "7350"

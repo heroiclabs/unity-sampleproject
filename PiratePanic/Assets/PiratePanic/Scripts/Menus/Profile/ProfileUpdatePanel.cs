@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using Facebook.Unity;
 using Nakama;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,28 +28,6 @@ namespace PiratePanic
 	/// </summary>
 	public class ProfileUpdatePanel : Menu
 	{
-		/// <summary>
-		/// Begins account migration process by invoking
-		/// <see cref="GameConnection.MigrateDeviceIdAsync(string)"/>.
-		/// </summary>
-		[SerializeField] private Button _facebookConflictConfirmButton = null;
-
-		/// <summary>
-		/// Panel with UI representing succesfull Facebook account linking.
-		/// </summary>
-		[SerializeField] private Menu _facebookSuccessPanel = null;
-
-		/// <summary>
-		/// Panel with UI representing failed Facebook account linking.
-		/// </summary>git sat
-		[SerializeField] private Menu _facebookErrorPanel = null;
-
-		/// <summary>
-		/// Panel allowing user to chose whether to migrate current device to
-		/// an already existing accoun linked to supplied Facebook account
-		/// </summary>
-		[SerializeField] private Menu _facebookConflictPanel = null;
-
 		[Space]
 		/// <summary>
 		/// Sends account update request to Nakama server and closes the panel.
@@ -61,11 +38,6 @@ namespace PiratePanic
 		/// Textbox containing account's username.
 		/// </summary>
 		[SerializeField] private InputField _usernameText = null;
-
-		/// <summary>
-		/// Restores account using Facebook.
-		/// </summary>
-		[SerializeField] private Button _linkFacebookButton = null;
 
 		/// <summary>
 		/// Image displying user's avatar.
@@ -89,7 +61,6 @@ namespace PiratePanic
 
 		private GameConnection _connection;
 		private string _deviceId;
-		private string _facebookToken;
 
 		public void Init(GameConnection connection, string deviceId)
 		{
@@ -98,7 +69,6 @@ namespace PiratePanic
 
 			_backButton.onClick.AddListener(() => Hide());
 			_doneButton.onClick.AddListener(Done);
-			_linkFacebookButton.gameObject.SetActive(FB.IsInitialized);
 
 			IApiUser user = _connection.Account.User;
 			_backButton.gameObject.SetActive(true);
@@ -110,16 +80,6 @@ namespace PiratePanic
 		private void Start()
 		{
 			_avatarButton.onClick.AddListener(ChangeAvatar);
-			_linkFacebookButton.onClick.AddListener(LinkFacebook);
-			_facebookConflictConfirmButton.onClick.AddListener(MigrateAccount);
-
-			_facebookConflictPanel.SetBackButtonHandler(() => _facebookConflictPanel.Hide());
-			_facebookErrorPanel.SetBackButtonHandler(() => _facebookErrorPanel.Hide());
-			_facebookSuccessPanel.SetBackButtonHandler(() => _facebookSuccessPanel.Hide());
-
-			_facebookConflictPanel.Hide(true);
-			_facebookErrorPanel.Hide(true);
-			_facebookSuccessPanel.Hide(true);
 		}
 
 		public override void Show(bool isMuteButtonClick = false)
@@ -136,84 +96,6 @@ namespace PiratePanic
 		{
 			int nextIndex = _currentAvatarIndex = (_currentAvatarIndex + 1) % _avatarSprites.Sprites.Length;
 			_avatarImage.sprite = _avatarSprites.Sprites[nextIndex];
-		}
-
-		/// <summary>
-		/// Links a Facebook account with Nakama user account.
-		/// If given facebook account is already linked to other Nakama account, links a dummy device
-		/// to current account, unlinks local device and migrates it to the Facebook linked account.
-		/// </summary>
-		private void LinkFacebook()
-		{
-			List<string> permissions = new List<string>();
-			permissions.Add("public_profile");
-
-			FB.LogInWithReadPermissions(permissions, async result =>
-			{
-				try
-				{
-					_facebookToken = result.AccessToken.TokenString;
-					await _connection.Client.AuthenticateFacebookAsync(_facebookToken);
-				}
-				catch (Exception e)
-				{
-					Debug.LogWarning("Error linking to facebook: " + e.Message);
-				}
-			});
-		}
-
-		/// <summary>
-		/// Invoked by <see cref="LinkFacebook"/> after successful or unsuccessfull facebook linking.
-		/// </summary>
-		private void OnFacebookResponded(long httpStatusCode)
-		{
-			if (httpStatusCode == 409)
-			{
-				_facebookConflictPanel.Show();
-			}
-			else if (httpStatusCode == 200)
-			{
-				_facebookSuccessPanel.Show();
-			}
-			else
-			{
-				_facebookErrorPanel.Show();
-			}
-		}
-
-		/// <summary>
-		/// Migrates current device to supplied Facebook account.
-		/// </summary>
-		private async void MigrateAccount()
-		{
-			_facebookConflictPanel.Hide();
-			string token = AccessToken.CurrentAccessToken.TokenString;
-
-			try
-			{
-				string dummyGuid = _deviceId + "-";
-				await _connection.Client.LinkDeviceAsync(_connection.Session, dummyGuid);
-				ISession activatedSession = await _connection.Client.AuthenticateFacebookAsync(_facebookToken, null, false);
-				await _connection.Client.UnlinkDeviceAsync(_connection.Session, _deviceId);
-				await _connection.Client.LinkDeviceAsync(activatedSession, _deviceId);
-				_connection.Session = activatedSession;
-
-				PlayerPrefs.SetString(GameConstants.AuthTokenKey, _connection.Session.AuthToken);
-
-				_connection.Account = await _connection.Client.GetAccountAsync(_connection.Session);
-
-				if (_connection.Account == null)
-				{
-					throw new Exception("Couldn't retrieve linked account data");
-				}
-
-				_facebookSuccessPanel.Show();
-			}
-			catch (Exception e)
-			{
-				Debug.LogWarning("An error has occured while linking dummy guid to local account: " + e);
-				_facebookErrorPanel.Show();
-			}
 		}
 
 		/// <summary>

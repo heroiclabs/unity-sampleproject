@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-#if !UNITY_EDITOR
-using Facebook.Unity;
-#endif
+
 using Nakama;
 using System;
 using System.Text;
@@ -97,30 +95,8 @@ namespace PiratePanic
 			_loadingMenu.Hide(true);
 		}
 
-		private void InitializeFacebook()
-		{
-			try
-			{
-#if !UNITY_EDITOR
-                FB.Init(() =>
-                {
-                    FB.ActivateApp();
-                });
-#endif
-			}
-			catch (Exception e)
-			{
-				// Not supported on mac
-#if !UNITY_OSX_STANDALONE
-				Debug.LogWarning("Error initializing facebook: " + e.Message);
-#endif
-			}
-		}
-
 		private async Task InitializeGame(string deviceId)
 		{
-			InitializeFacebook();
-
 			var client = new Client("http", "localhost", 7350, "defaultkey", UnityWebRequestAdapter.Instance);
 			client.Timeout = 5;
 

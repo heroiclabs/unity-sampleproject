@@ -170,13 +170,10 @@ namespace PiratePanic
 
 			if (string.IsNullOrWhiteSpace(deviceId))
 			{
-				// SystemInfo.deviceUniqueIdentifier is not supported in WebGL,
-				// we generate a random one instead via System.Guid
-#if UNITY_WEBGL && !UNITY_EDITOR
-				deviceId = System.Guid.NewGuid().ToString();
-#else
-				deviceId = SystemInfo.deviceUniqueIdentifier;
-#endif
+				// Ordinarily, we would use SystemInfo.deviceUniqueIdentifier but for the purposes
+				// of this demo we use Guid.NewGuid() so that developers can test against themselves locally.
+				// Also note: SystemInfo.deviceUniqueIdentifier is not supported in WebGL.
+				deviceId = Guid.NewGuid().ToString();
 			}
 
 			return deviceId;

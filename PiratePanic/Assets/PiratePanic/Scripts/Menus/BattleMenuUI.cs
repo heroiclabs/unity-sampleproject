@@ -15,14 +15,9 @@
  */
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Nakama;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
 
 namespace PiratePanic
 {
@@ -118,6 +113,8 @@ namespace PiratePanic
 		{
 			_connection.BattleConnection = new BattleConnection(matched);
 			_connection.Socket.ReceivedMatchmakerMatched -= OnMatchmakerMatched;
+
+			Debug.Log("matchmaker matched called");
 
 			SceneManager.LoadScene(GameConfigurationManager.Instance.GameConfiguration.SceneNameBattle);
 		}

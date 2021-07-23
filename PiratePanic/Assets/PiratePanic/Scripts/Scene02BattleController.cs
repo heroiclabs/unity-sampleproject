@@ -17,6 +17,7 @@
 using Nakama;
 using Nakama.TinyJson;
 using PiratePanic.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -121,6 +122,8 @@ namespace PiratePanic
 
 		protected async Task Start()
 		{
+			Debug.Log("start called");
+
 			_stateManager = new GameStateManager(_connection);
 			_stateManager.OnCardRequested += OnCardRequested;
 			_stateManager.OnCardPlayed += OnCardPlayed;
@@ -131,6 +134,8 @@ namespace PiratePanic
 			_localHandPanel.OnCardPlayed += OnCardRequested;
 			_localHandPanel.Init(_connection, _stateManager);
 
+			Debug.Log("post local hand panel init");
+
 			_summary.SetBackButtonHandler(() =>
 			{
 				_summary.Hide();
@@ -140,14 +145,20 @@ namespace PiratePanic
 			await _localHand.Init(_connection);
 			await _opponentHand.Init(_connection);
 
+			Debug.Log("post hand init");
+
 			_unitsManager.OnAfterUnitInstantiated += HandleAfterUnitInstantiated;
 
 			IMatch match = await _connection.Socket.JoinMatchAsync(_connection.BattleConnection.Matched);
 
 			_connection.BattleConnection.MatchId = match.Id;
 
+
+
 			if (match.Presences.Count() == 1)
 			{
+				Debug.Log("count is 1");
+
 				string opponentId = match.Presences.First().UserId;
 				_connection.BattleConnection.OpponentId = opponentId;
 				_connection.BattleConnection.HostId = opponentId;
@@ -155,6 +166,7 @@ namespace PiratePanic
 			}
 			else
 			{
+				Debug.Log("count is 0");
 				_connection.BattleConnection.HostId = _connection.Session.UserId;
 				_connection.Socket.ReceivedMatchPresence += HandleOtherPlayerJoin;
 			}
@@ -182,12 +194,14 @@ namespace PiratePanic
 
 		private void HandleOtherPlayerJoin(IMatchPresenceEvent obj)
 		{
-			if (!obj.Joins.Any())
+			Func<IUserPresence, bool> findOtherPlayer = join => join.UserId != _connection.Session.UserId;
+
+			if (!obj.Joins.Any(findOtherPlayer))
 			{
 				return;
 			}
 
-			string opponentId = obj.Joins.Select(join => join.UserId).First(id => id != _connection.Session.UserId);
+			string opponentId = obj.Joins.First(findOtherPlayer).UserId;
 			_connection.BattleConnection.OpponentId = opponentId;
 			_connection.Socket.ReceivedMatchPresence -= HandleOtherPlayerJoin;
 			SetInitialPlayerState();

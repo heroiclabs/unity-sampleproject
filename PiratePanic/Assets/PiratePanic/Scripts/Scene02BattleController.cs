@@ -19,6 +19,7 @@ using Nakama.TinyJson;
 using PiratePanic.Managers;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace PiratePanic
@@ -118,12 +119,14 @@ namespace PiratePanic
 		private UnitsManager _unitsManager;
 		private SpellsManager _spellsManager;
 
-		protected override void Awake()
+		protected async Task Start()
 		{
 			_stateManager = new GameStateManager(_connection);
 			_stateManager.OnCardRequested += OnCardRequested;
 			_stateManager.OnCardPlayed += OnCardPlayed;
 			_stateManager.OnStartingHandReceived += OnStartingHandReceived;
+
+			_unitsManager = new UnitsManager(_connection, _stateManager);
 
 			_localHandPanel.OnCardPlayed += OnCardRequested;
 			_localHandPanel.Init(_connection, _stateManager);
@@ -134,17 +137,11 @@ namespace PiratePanic
 				_stateManager.LeaveGame();
 			});
 
-			_localHand.Init(_connection);
-			_opponentHand.Init(_connection);
+			await _localHand.Init(_connection);
+			await _opponentHand.Init(_connection);
 
-			_unitsManager = new UnitsManager(_connection, _stateManager);
 			_unitsManager.OnAfterUnitInstantiated += HandleAfterUnitInstantiated;
 
-			base.Awake();
-		}
-
-		protected async void Start()
-		{
 			IMatch match = await _connection.Socket.JoinMatchAsync(_connection.BattleConnection.Matched);
 
 			_connection.BattleConnection.MatchId = match.Id;

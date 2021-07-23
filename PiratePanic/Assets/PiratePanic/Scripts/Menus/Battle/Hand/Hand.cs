@@ -47,7 +47,7 @@ namespace PiratePanic
 
 		private GameConnection _connection;
 
-		public async void Init(GameConnection connection)
+		public async Task Init(GameConnection connection)
 		{
 			_connection = connection;
 

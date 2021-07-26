@@ -75,6 +75,7 @@ The Unity Editor is required. Download it from <a href="https://unity3d.com/get-
 **Standalone Build Play Session**
 1. Open the project in the Unity Editor
 2. Make a Unity Standalone Build (e.g. WindowsStandalone)
+    - Mac OS users will need to temporarily change the bundle identifier prior to building. On Mac OS, Unity shares .plist files between the editor and the standalone build.
 3. Run the Standalone Build of Pirate Panic
 4. Click "Battle"
 

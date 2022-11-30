@@ -139,14 +139,9 @@ namespace PiratePanic
 				PlayerPrefs.SetString(GameConstants.RefreshTokenKey, session.RefreshToken);
 			}
 
-			try
-			{
-				await socket.ConnectAsync(session);
-			}
-			catch (Exception e)
-			{
-				Debug.LogWarning("Error connecting socket: " + e.Message);
-			}
+			socket.Closed += () => Connect(socket, session);
+			
+			Connect(socket, session);
 
 			IApiAccount account = null;
 
@@ -182,6 +177,21 @@ namespace PiratePanic
 		private async void OnApplicationQuit()
 		{
 			await _connection.Socket.CloseAsync();
+		}
+
+		private async void Connect(ISocket socket, ISession session)
+		{
+			try
+			{
+				if (!socket.IsConnected)
+				{
+					await socket.ConnectAsync(session);
+				}
+			}
+			catch (Exception e)
+			{
+				Debug.LogWarning("Error connecting socket: " + e.Message);
+			}
 		}
 	}
 }

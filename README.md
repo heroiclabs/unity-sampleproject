@@ -1,6 +1,11 @@
 ﻿Unity Sample Project
 ==================
 
+> [!WARNING]
+> **Deprecated:** this sample project is no longer maintained or supported.
+> For up-to-date sample projects and demos from Heroic Labs, see the
+> [Sample Projects](https://heroiclabs.com/docs/sample-projects/index.html) page.
+
 <img width="100%" src="./PiratePanic/Assets/PiratePanic/Documentation/Images/Battle_Screenshot.png">
 
 ## Welcome to "Pirate Panic" !
@@ -86,14 +91,6 @@ The Unity Editor is required. Download it from <a href="https://unity3d.com/get-
 4. Click "Battle"
 
 Now the **Standalone** is playing against the **Unity Editor**. Enjoy!
-
-## Contribute
-
-GitHub issues and pull requests are welcome. If you're interested in enhancing the code please open an issue to discuss the changes or drop in and discuss it in the [community forum](https://forum.heroiclabs.com).
-
-To modify the Typescript remote procedure calls (RPCs), install Node Package Manager (NPM), run `npm install` and `npx tsc` from the `ServerModules` folder, and restart the server.
-
-More documentation on working with the Nakama Typescript runtime can be found here: https://heroiclabs.com/docs/runtime-code-typescript-setup/
 
 ### License
 
